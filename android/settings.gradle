@@ -1,0 +1,3 @@
+rootProject.name = 'lbs_ad_app'
+
+include ':app'
