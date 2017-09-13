@@ -8,6 +8,13 @@ Everyone should use his own repository to develop a new feature, and then make a
 Use `Git clone` to clone a mirror copy of code to your dist (Run the command on your terminal):
 `git clone https://github.com/[YOUR USERNAME]/lbs_ad_app.git`
 
+### 3. Install dependencies
+>
+cd lbs_ad_app
+npm install
+`- or - (if using yarn)`
+yarn
+
 ### 3. Install `react-native-cli` globally
 Make sure that, you have to install Node.js previously. It is recommended to install Node.js through [nvm](https://github.com/creationix/nvm). Then, run the following command in your terminal:
 `npm install -g react-native-cli`
