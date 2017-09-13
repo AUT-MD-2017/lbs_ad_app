@@ -1,9 +1,11 @@
-import React from 'react';
-import { Text } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+
+import { MainScreen, ProfileScreen } from '../containers';
 
 
-const App = () => (
-  <Text>Welcome to React Native!</Text>
-);
+const App = StackNavigator({
+  Main: { screen: MainScreen },
+  Profile: { screen: ProfileScreen },
+});
 
 export default App;
