@@ -35,6 +35,9 @@ cd lbs_ad_app
 react-native run-android
 
 
+### 5. At least, the code should pass lint scripts & CI before making a PR
+Switch on Travis CI for you local branch: https://travis-ci.org/profile
+
 ## Tech Stacks
 1. [React Native](https://facebook.github.io/react-native/)
 2. [Redux](http://redux.js.org/)
