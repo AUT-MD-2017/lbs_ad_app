@@ -41,8 +41,7 @@ Switch on Travis CI for you local branch: https://travis-ci.org/profile
 ## Tech Stacks
 1. [React Native](https://facebook.github.io/react-native/)
 2. [Redux](http://redux.js.org/)
-3. [Redux Action Tools](https://github.com/kpaxqin/redux-action-tools)
-  - A related reference in Chinese: [Redux异步方案选型](http://react-china.org/t/redux/8761)
+3. [Redux Action Tools](https://github.com/kpaxqin/redux-action-tools), A related reference in Chinese: [Redux异步方案选型](http://react-china.org/t/redux/8761)  
 4. [Styled Components](https://www.styled-components.com/): strongly recommend to watch [the video](https://youtu.be/bIK2NwoK9xk) to gain the motivation of designing this library.
 5. [NativeBase](https://docs.nativebase.io/)
 6. [React Navigation](https://reactnavigation.org/)
