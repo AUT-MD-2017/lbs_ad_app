@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Container, List, ListItem, Text } from 'native-base';
-import styled from 'styled-components/native';
+import { List, ListItem, Text } from 'native-base';
 
+import { Container } from '../components/misc';
 import * as locationsActions from '../actions/locations';
 
 
-const StyledContainer = styled(Container)`
-  background-color: white;
-`;
-
-class MainScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.onLocationItemPress = this.onLocationItemPress.bind(this);
+class NearbyScreen extends Component {
+  static navigationOptions = {
+    title: 'Nearby',
   }
 
   componentDidMount() {
@@ -29,29 +24,32 @@ class MainScreen extends Component {
     this.props.actions.fetchLocations(pos);
   }
 
-  onLocationItemPress() {
+  onLocationItemPress(location) {
+    const { navigation: { navigate } } = this.props;
+    navigate('Location', { location });
   }
 
   render() {
-    const { items } = this.props.locations;
+    const { locations: { items } } = this.props;
 
     return (
-      <StyledContainer>
+      <Container>
         <List>
           {items.map(item => (
-            <ListItem key={item.id} onPress={this.onLocationItemPress}>
+            <ListItem
+              key={item.id}
+              onPress={() => {
+                this.onLocationItemPress(item);
+              }}
+            >
               <Text>{item.name}</Text>
             </ListItem>
           ))}
         </List>
-      </StyledContainer>
+      </Container>
     );
   }
 }
-
-MainScreen.navigationOptions = {
-  title: 'Nearby',
-};
 
 const mapStateToProps = ({ locations }) => {
   return { locations };
@@ -64,4 +62,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MainScreen);
+)(NearbyScreen);

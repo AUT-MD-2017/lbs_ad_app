@@ -1,2 +1,2 @@
-export { default as MainScreen } from './main';
-export { default as ProfileScreen } from './profile';
+export { default as NearbyScreen } from './nearby';
+export { default as LocationScreen } from './location';

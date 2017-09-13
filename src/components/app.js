@@ -1,11 +1,11 @@
 import { StackNavigator } from 'react-navigation';
 
-import { MainScreen, ProfileScreen } from '../containers';
+import { NearbyScreen, LocationScreen } from '../containers';
 
 
 const App = StackNavigator({
-  Main: { screen: MainScreen },
-  Profile: { screen: ProfileScreen },
+  Nearby: { screen: NearbyScreen },
+  Location: { screen: LocationScreen },
 });
 
 export default App;
