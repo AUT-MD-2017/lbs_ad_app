@@ -22,10 +22,10 @@ Make sure that, you have to install Node.js previously. It is recommended to ins
 ### 4. Run the APP in both iOS and Android platforms:
 #### To run your app on iOS:
 >
-cd lbs_ad_app
-react-native run-ios
-`- or -`
-Open deals99_app/ios/Deals99.xcodeproj in Xcode
+cd lbs_ad_app<br>
+react-native run-ios<br>
+`- or -`<br>
+Open deals99_app/ios/Deals99.xcodeproj in Xcode<br>
 Hit the Run button
 
 #### To run your app on Android:
