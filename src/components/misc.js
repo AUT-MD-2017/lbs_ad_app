@@ -1,4 +1,3 @@
-// import React from 'react';
 import { Container as BaseContainer } from 'native-base';
 import styled from 'styled-components/native';
 
