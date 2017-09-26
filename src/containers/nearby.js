@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  ListView, TouchableHighlight, Text, View,
+  ListView, TouchableHighlight, Text, View, RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
@@ -50,26 +50,44 @@ const Distance = styled(Text)`
   margin-left: 5;
 `;
 
+// TODO: https://facebook.github.io/react-native/docs/geolocation.html
+const pos = {
+  coords: {
+    latitude: -36.92507,
+    longitude: 174.73578,
+  },
+};
+
 class NearbyScreen extends Component {
   static navigationOptions = {
     title: 'Nearby',
   }
 
-  componentDidMount() {
-    // TODO: https://facebook.github.io/react-native/docs/geolocation.html
-    const pos = {
-      coords: {
-        latitude: -36.92507,
-        longitude: 174.73578,
-      },
-    };
-
-    this.props.actions.fetchLocations(pos);
+  state = {
+    refreshing: false,
   }
 
-  onLocationItemPress(location) {
+  componentDidMount() {
+    this.fetchLocations();
+  }
+
+  onRefresh = () => {
+    this.fetchLocations().then(() => {
+      this.setState({ refreshing: false });
+    });
+  }
+
+  onLocationItemPress = (location) => {
     const { navigation: { navigate } } = this.props;
     navigate('Location', { location });
+  }
+
+  fetchLocations = () => {
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        this.props.actions.fetchLocations(pos).then(resolve);
+      });
+    });
   }
 
   renderPriceIcons = (priceLevel) => {
@@ -112,6 +130,12 @@ class NearbyScreen extends Component {
       <Container>
         <ListView
           enableEmptySections
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
           dataSource={dataSource}
           renderRow={this.renderRow}
         />
