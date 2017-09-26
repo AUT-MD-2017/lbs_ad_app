@@ -50,20 +50,13 @@ const Distance = styled(Text)`
   margin-left: 5;
 `;
 
-// TODO: https://facebook.github.io/react-native/docs/geolocation.html
-const pos = {
-  coords: {
-    latitude: -36.92507,
-    longitude: 174.73578,
-  },
-};
-
 class NearbyScreen extends Component {
   static navigationOptions = {
     title: 'Nearby',
   }
 
   state = {
+    loading: false,
     refreshing: false,
   }
 
@@ -71,9 +64,30 @@ class NearbyScreen extends Component {
     this.fetchLocations();
   }
 
-  onRefresh = () => {
+  onListRefresh = () => {
+    if (this.state.refreshing) return;
+    console.log('refreshing!!!');
+
+    this.setState({ refreshing: true });
     this.fetchLocations().then(() => {
       this.setState({ refreshing: false });
+    });
+  }
+
+  onListLoadMore = () => {
+    if (this.state.loading) return;
+    console.log('onListLoadMore!!!');
+
+    const { total, page, perPage } = this.props.locations;
+
+    if (page * perPage >= total) return;
+
+    this.setState({ loading: true });
+    this.fetchLocations({
+      page: page + 1,
+      perPage,
+    }).then(() => {
+      this.setState({ loading: false });
     });
   }
 
@@ -82,10 +96,13 @@ class NearbyScreen extends Component {
     navigate('Location', { location });
   }
 
-  fetchLocations = () => {
+  fetchLocations = (query = {}) => {
     return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition((pos) => {
-        this.props.actions.fetchLocations(pos).then(resolve);
+        this.props.actions.fetchLocations({
+          ...pos,
+          query,
+        }).then(resolve);
       });
     });
   }
@@ -101,7 +118,7 @@ class NearbyScreen extends Component {
     });
   }
 
-  renderRow = rowData => (
+  renderListRow = rowData => (
     <TouchableHighlight
       onPress={() => this.onLocationItemPress(rowData)}
     >
@@ -118,6 +135,14 @@ class NearbyScreen extends Component {
     </TouchableHighlight>
   );
 
+  renderListFooter = () => {
+    return this.state.loading && (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   render() {
     const { locations: { items } } = this.props;
 
@@ -132,12 +157,15 @@ class NearbyScreen extends Component {
           enableEmptySections
           refreshControl={
             <RefreshControl
+              title="Updating Locations"
               refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh}
+              onRefresh={this.onListRefresh}
             />
           }
           dataSource={dataSource}
-          renderRow={this.renderRow}
+          renderRow={this.renderListRow}
+          onEndReached={this.onListLoadMore}
+          renderFooter={this.renderListFooter}
         />
       </Container>
     );
