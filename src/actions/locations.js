@@ -7,10 +7,11 @@ import * as types from '../constants/action_types';
 export const fetchLocations = createAsyncAction(
   types.FETCH_LOCATIONS,
 
-  ({ coords }) => {
+  ({ coords, query }) => {
     return utils.api('locations', {
       lat: coords.latitude,
       lng: coords.longitude,
+      ...query,
     });
   },
 );
