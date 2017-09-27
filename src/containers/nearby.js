@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  ListView, TouchableHighlight, Text, View, RefreshControl,
+  ListView, TouchableHighlight, Text, View,
+  RefreshControl, ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
@@ -50,6 +51,22 @@ const Distance = styled(Text)`
   margin-left: 5;
 `;
 
+const ListFooter = styled(View)`
+  height: 50;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  background-color: ${consts.WHITE};
+`;
+
+const LoadMoreIndicator = styled(ActivityIndicator)`
+  margin-right: 8;
+`;
+
+const LoadMoreText = styled(Text)`
+  color: ${consts.DARK_GREY};
+`;
+
 class NearbyScreen extends Component {
   static navigationOptions = {
     title: 'Nearby',
@@ -66,7 +83,6 @@ class NearbyScreen extends Component {
 
   onListRefresh = () => {
     if (this.state.refreshing) return;
-    console.log('refreshing!!!');
 
     this.setState({ refreshing: true });
     this.fetchLocations().then(() => {
@@ -75,12 +91,7 @@ class NearbyScreen extends Component {
   }
 
   onListLoadMore = () => {
-    if (this.state.loading) return;
-    console.log('onListLoadMore!!!');
-
-    const { total, page, perPage } = this.props.locations;
-
-    if (page * perPage >= total) return;
+    const { page, perPage } = this.props.locations;
 
     this.setState({ loading: true });
     this.fetchLocations({
@@ -136,10 +147,21 @@ class NearbyScreen extends Component {
   );
 
   renderListFooter = () => {
-    return this.state.loading && (
-      <View>
-        <Text>Loading...</Text>
-      </View>
+    const { total, page, perPage } = this.props.locations;
+
+    if (page * perPage > total) return null;
+
+    return this.state.loading ? (
+      <ListFooter>
+        <LoadMoreIndicator />
+        <LoadMoreText>Loading</LoadMoreText>
+      </ListFooter>
+    ) : (
+      <TouchableHighlight onPress={this.onListLoadMore}>
+        <ListFooter>
+          <LoadMoreText>Load More</LoadMoreText>
+        </ListFooter>
+      </TouchableHighlight>
     );
   }
 
@@ -164,7 +186,6 @@ class NearbyScreen extends Component {
           }
           dataSource={dataSource}
           renderRow={this.renderListRow}
-          onEndReached={this.onListLoadMore}
           renderFooter={this.renderListFooter}
         />
       </Container>
