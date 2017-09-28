@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
@@ -9,47 +9,9 @@ import styled from 'styled-components/native';
 
 import * as consts from '../constants';
 import { Container } from '../components/misc';
-import PriceLevel from '../components/price_level';
+import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationsActions from '../actions/locations';
 
-
-const Item = styled(View)`
-  background-color: ${consts.WHITE};
-  align-items: center;
-  flex-direction: row;
-  height: 60;
-  padding-horizontal: 20;
-  border-bottom-color: ${consts.LIGHTER_GREY};
-  border-bottom-width: 1;
-`;
-
-const LeftView = styled(View)`
-  flex: 1;
-  flex-direction: column;
-`;
-
-const RightView = styled(View)`
-  align-items: center;
-  flex-direction: row;
-`;
-
-const LocationName = styled(Text)`
-  font-size: 16;
-  color: ${consts.BLACK};
-  margin-bottom: 5;
-`;
-
-const Category = styled(Text)`
-  color: ${consts.GREY};
-`;
-
-const Distance = styled(Text)`
-  font-size: 13;
-  color: ${consts.GREY};
-  width: 40;
-  text-align: right;
-  margin-left: 5;
-`;
 
 const ListFooter = styled(View)`
   height: 50;
@@ -67,7 +29,7 @@ const LoadMoreText = styled(Text)`
   color: ${consts.DARK_GREY};
 `;
 
-class NearbyScreen extends Component {
+class NearbyScreen extends React.Component {
   static navigationOptions = {
     title: 'Nearby',
   }
@@ -122,16 +84,7 @@ class NearbyScreen extends Component {
     <TouchableHighlight
       onPress={() => this.onLocationItemPress(rowData)}
     >
-      <Item>
-        <LeftView>
-          <LocationName>{rowData.name}</LocationName>
-          <Category>{rowData.category}</Category>
-        </LeftView>
-        <RightView>
-          <PriceLevel level={rowData.priceLevel} />
-          <Distance>{rowData.distance}</Distance>
-        </RightView>
-      </Item>
+      <LocationPrimaryInfo location={rowData} />
     </TouchableHighlight>
   );
 

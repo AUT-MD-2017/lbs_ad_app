@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
@@ -11,7 +11,7 @@ const Container = styled(View)`
   flex-direction: row;
 `;
 
-class PriceLevel extends Component {
+export default class PriceLevel extends React.Component {
   renderPriceIcons = () => {
     let achived = false;
 
@@ -30,5 +30,3 @@ class PriceLevel extends Component {
     );
   }
 }
-
-export default PriceLevel;

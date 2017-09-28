@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Text, View } from 'react-native';
@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 
 import * as consts from '../constants';
 import { Container } from '../components/misc';
+import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationActions from '../actions/location';
 
 
@@ -19,7 +20,7 @@ const Card = styled(View)`
   padding-horizontal: 10;
 `;
 
-class LocaitonScreen extends Component {
+class LocaitonScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.location.name,
   });
@@ -35,7 +36,7 @@ class LocaitonScreen extends Component {
     return (
       <StyledContainer>
         <Card>
-          <Text>{location.name}</Text>
+          <LocationPrimaryInfo location={location} />
         </Card>
       </StyledContainer>
     );
