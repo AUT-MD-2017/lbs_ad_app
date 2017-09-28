@@ -5,11 +5,11 @@ import {
   ListView, TouchableHighlight, Text, View,
   RefreshControl, ActivityIndicator,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
 import { Container } from '../components/misc';
+import PriceLevel from '../components/price_level';
 import * as locationsActions from '../actions/locations';
 
 
@@ -18,7 +18,7 @@ const Item = styled(View)`
   align-items: center;
   flex-direction: row;
   height: 60;
-  paddingHorizontal: 24;
+  padding-horizontal: 20;
   border-bottom-color: ${consts.LIGHTER_GREY};
   border-bottom-width: 1;
 `;
@@ -118,17 +118,6 @@ class NearbyScreen extends Component {
     });
   }
 
-  renderPriceIcons = (priceLevel) => {
-    let achived = false;
-    return ['l', 'n', 'h'].map((level) => {
-      const color = achived ? consts.LIGHT_GREY : consts.DARK_GREY;
-      if (priceLevel === level) {
-        achived = true;
-      }
-      return <Icon key={level} name="dollar" size={11} color={color} />;
-    });
-  }
-
   renderListRow = rowData => (
     <TouchableHighlight
       onPress={() => this.onLocationItemPress(rowData)}
@@ -139,7 +128,7 @@ class NearbyScreen extends Component {
           <Category>{rowData.category}</Category>
         </LeftView>
         <RightView>
-          {this.renderPriceIcons(rowData.priceLevel)}
+          <PriceLevel level={rowData.priceLevel} />
           <Distance>{rowData.distance}</Distance>
         </RightView>
       </Item>
