@@ -6,7 +6,9 @@ Everyone should use his own repository to develop a new feature, and then make a
 
 ### 2. Clone the code into your local environment
 Use `Git clone` to clone a mirror copy of code to your dist (Run the command on your terminal):
-`git clone https://github.com/[YOUR USERNAME]/lbs_ad_app.git`
+```shell
+git clone https://github.com/[YOUR USERNAME]/lbs_ad_app.git
+```
 
 ### 3. Install dependencies
 > cd lbs_ad_app<br>
@@ -27,10 +29,9 @@ Make sure that, you have to install Node.js previously. It is recommended to ins
 > Hit the Run button
 
 #### To run your app on Android:
->
-Have an Android emulator running (quickest way to get started), or a device connected
-cd lbs_ad_app
-react-native run-android
+> Have an Android emulator running (quickest way to get started), or a device connected
+> cd lbs_ad_app
+> react-native run-android
 
 
 ### 5. At least, the code should pass lint scripts & CI before making a PR
@@ -42,7 +43,7 @@ Switch on Travis CI for you local branch: https://travis-ci.org/profile
 Following this tutorial: https://help.github.com/articles/configuring-a-remote-for-a-fork/
 
 ### 2. Syncing the local branch
-```
+```shell
 git checkout master
 git fetch --all
 git rebase upstream/master
@@ -50,7 +51,7 @@ git push
 ```
 
 Note that, each time when you develop a future, you should use a separated branch.
-```
+```shell
 git checkout -b [the new branche nanme]
 ```
 
