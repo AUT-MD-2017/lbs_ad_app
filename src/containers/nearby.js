@@ -2,8 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  ListView, TouchableHighlight, Text, View,
-  RefreshControl, ActivityIndicator,
+  ListView, TouchableHighlight, Text, View, RefreshControl,
 } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -13,6 +12,13 @@ import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationsActions from '../actions/locations';
 
 
+const LocationItem = styled.View`
+  background-color: ${consts.WHITE};
+  border-bottom-color: ${consts.LIGHTER_GREY};
+  border-bottom-width: 1;
+  padding-horizontal: 20;
+`;
+
 const ListFooter = styled(View)`
   height: 50;
   align-items: center;
@@ -21,7 +27,7 @@ const ListFooter = styled(View)`
   background-color: ${consts.WHITE};
 `;
 
-const LoadMoreIndicator = styled(ActivityIndicator)`
+const LoadMoreIndicator = styled.ActivityIndicator`
   margin-right: 8;
 `;
 
@@ -84,7 +90,9 @@ class NearbyScreen extends React.Component {
     <TouchableHighlight
       onPress={() => this.onLocationItemPress(rowData)}
     >
-      <LocationPrimaryInfo location={rowData} />
+      <LocationItem>
+        <LocationPrimaryInfo location={rowData} />
+      </LocationItem>
     </TouchableHighlight>
   );
 

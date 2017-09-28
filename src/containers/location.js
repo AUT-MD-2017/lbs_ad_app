@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
@@ -14,7 +14,7 @@ const StyledContainer = styled(Container)`
   background-color: ${consts.DARK_WHITE};
 `;
 
-const Card = styled(View)`
+const Card = styled.View`
   background-color: ${consts.WHITE};
   padding-vertical: 10;
   padding-horizontal: 10;
