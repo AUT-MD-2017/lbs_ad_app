@@ -19,6 +19,10 @@ const LocationItem = styled.View`
   padding-horizontal: 20;
 `;
 
+const HighLightLocationItem = LocationItem.extend`
+  background-color: ${consts.LIGHT_YELLOW};
+`;
+
 const ListFooter = styled(View)`
   height: 50;
   align-items: center;
@@ -86,15 +90,19 @@ class NearbyScreen extends React.Component {
     });
   }
 
-  renderListRow = rowData => (
-    <TouchableHighlight
-      onPress={() => this.onLocationItemPress(rowData)}
-    >
-      <LocationItem>
-        <LocationPrimaryInfo location={rowData} />
-      </LocationItem>
-    </TouchableHighlight>
-  );
+  renderListRow = (rowData) => {
+    const Item = rowData.discount ? HighLightLocationItem : LocationItem;
+
+    return (
+      <TouchableHighlight
+        onPress={() => this.onLocationItemPress(rowData)}
+      >
+        <Item>
+          <LocationPrimaryInfo showDiscount location={rowData} />
+        </Item>
+      </TouchableHighlight>
+    );
+  }
 
   renderListFooter = () => {
     const { total, page, perPage } = this.props.locations;

@@ -7,3 +7,7 @@ import * as consts from '../constants';
 export const Container = styled(BaseContainer)`
   background-color: ${consts.WHITE};
 `;
+
+export const SmallText = styled.Text`
+  font-size: 12;
+`;

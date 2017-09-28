@@ -1,11 +1,10 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
-import { Container } from '../components/misc';
+import { Container, SmallText } from '../components/misc';
 import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationActions from '../actions/location';
 
@@ -20,6 +19,10 @@ const Card = styled.View`
   padding-horizontal: 10;
 `;
 
+const HoursToday = styled.View`
+  margin-top: 5;
+`;
+
 class LocaitonScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.location.name,
@@ -31,12 +34,18 @@ class LocaitonScreen extends React.Component {
   }
 
   render() {
-    const { location } = this.props.navigation.state.params;
+    const location = {
+      ...this.props.location,
+      ...this.props.navigation.state.params.location,
+    };
 
     return (
       <StyledContainer>
         <Card>
           <LocationPrimaryInfo location={location} />
+          <HoursToday>
+            <SmallText>Hours Today: {location.hoursToday}</SmallText>
+          </HoursToday>
         </Card>
       </StyledContainer>
     );

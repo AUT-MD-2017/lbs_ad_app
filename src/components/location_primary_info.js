@@ -12,6 +12,10 @@ const Item = styled.View`
   height: 60;
 `;
 
+const HighLightItem = Item.extend`
+  background-color: ${consts.LIGHT_YELLOW};
+`;
+
 const LeftView = styled.View`
   flex: 1;
   flex-direction: column;
@@ -24,11 +28,11 @@ const RightView = styled.View`
 
 const LocationName = styled.Text`
   font-size: 16;
-  color: ${consts.BLACK};
   margin-bottom: 5;
 `;
 
 const Category = styled.Text`
+  font-size: 12;
   color: ${consts.GREY};
 `;
 
@@ -42,19 +46,26 @@ const Distance = styled.Text`
 
 export default class LocationPrimaryInfo extends React.Component {
   render() {
-    const { name, category, priceLevel, distance } = this.props.location;
+    const {
+      name, category, discount, priceLevel, distance
+    } = this.props.location;
+    const showDiscount = this.props.showDiscount && discount;
+    const ItemContainer = showDiscount ? HighLightItem : Item;
 
     return (
-      <Item>
+      <ItemContainer>
         <LeftView>
           <LocationName>{name}</LocationName>
-          <Category>{category}</Category>
+          {showDiscount && discount ?
+            <Category>{category} | Coupon for {discount}% OFF</Category> :
+            <Category>{category}</Category>
+          }
         </LeftView>
         <RightView>
           <PriceLevel level={priceLevel} />
           <Distance>{distance}</Distance>
         </RightView>
-      </Item>
+      </ItemContainer>
     );
   }
 }
