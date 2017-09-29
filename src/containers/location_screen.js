@@ -5,14 +5,13 @@ import { TouchableHighlight } from 'react-native';
 import { phonecall, web } from 'react-native-communications';
 import styled from 'styled-components/native';
 
-import * as consts from '../constants';
+import {
+  Ionicons, ListItem, LocationMap, LocationPrimaryInfo,
+} from '../components';
 import {
   Card, Container, SmallText, SimpleCard,
 } from '../components/misc';
-import Ionicons from '../components/ionicons';
-import ListItem from '../components/list_item';
-import LocationMap from '../components/location_map';
-import LocationPrimaryInfo from '../components/location_primary_info';
+import * as consts from '../constants';
 import * as locationActions from '../actions/location';
 
 
@@ -45,6 +44,10 @@ const HoursToday = styled.View`
   margin-top: 5;
 `;
 
+const WhiteView = styled.View`
+  background-color: ${consts.WHITE};
+`;
+
 class LocaitonScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.location.name,
@@ -53,6 +56,11 @@ class LocaitonScreen extends React.Component {
   componentDidMount() {
     const { location } = this.props.navigation.state.params;
     this.props.actions.fetchLocation(location.id);
+  }
+
+  onAddressPress = () => {
+    const { navigation: { navigate }, location } = this.props;
+    navigate('Map', { location });
   }
 
   onCallContact = () => {
@@ -86,10 +94,14 @@ class LocaitonScreen extends React.Component {
         </Card>
 
         <SimpleCard>
-          <LocationMap style={styles.map} location={location} />
-          <ListItem>
-            <FlexText>{location.address}</FlexText>
-          </ListItem>
+          <TouchableHighlight onPress={this.onAddressPress}>
+            <WhiteView>
+              <LocationMap style={styles.map} location={location} />
+              <ListItem>
+                <FlexText>{location.address}</FlexText>
+              </ListItem>
+            </WhiteView>
+          </TouchableHighlight>
         </SimpleCard>
 
         <SimpleCard>

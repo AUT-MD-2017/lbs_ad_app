@@ -6,9 +6,9 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native';
 
-import * as consts from '../constants';
+import { LocationPrimaryInfo } from '../components';
 import { Container } from '../components/misc';
-import LocationPrimaryInfo from '../components/location_primary_info';
+import * as consts from '../constants';
 import * as locationsActions from '../actions/locations';
 
 

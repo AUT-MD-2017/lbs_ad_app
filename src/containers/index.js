@@ -1,2 +1,2 @@
-export { default as NearbyScreen } from './nearby';
-export { default as LocationScreen } from './location';
+export { default as NearbyScreen } from './nearby_screen';
+export { default as LocationScreen } from './location_screen';
