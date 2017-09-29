@@ -1,10 +1,13 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
-import { Container, SmallText } from '../components/misc';
+import { Card, Container, SmallText } from '../components/misc';
+import Ionicons from '../components/ionicons';
 import LocationMap from '../components/location_map';
 import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationActions from '../actions/location';
@@ -20,13 +23,12 @@ const StyledContainer = styled(Container)`
   background-color: ${consts.DARK_WHITE};
 `;
 
-const LocationCard = styled.View`
-  background-color: ${consts.WHITE};
-  padding-vertical: 10;
-  padding-horizontal: 10;
-  border-bottom-color: ${consts.LIGHTER_GREY};
-  border-bottom-width: 1;
-  margin-bottom: 15;
+const AddressCard = Card.extend`
+  flex-direction: row;
+`;
+
+const AddressText = SmallText.extend`
+  flex: 1;
 `;
 
 const Discount = styled.Text`
@@ -59,7 +61,7 @@ class LocaitonScreen extends React.Component {
 
     return (
       <StyledContainer>
-        <LocationCard>
+        <Card>
           <LocationPrimaryInfo location={location} />
           {discount &&
             <Discount>Coupon: Showing this to gain ${discount}% OFF</Discount>
@@ -67,8 +69,16 @@ class LocaitonScreen extends React.Component {
           <HoursToday>
             <SmallText>Hours Today: {location.hoursToday}</SmallText>
           </HoursToday>
-        </LocationCard>
-        <LocationMap style={styles.map} location={location} />
+        </Card>
+        <View>
+          <LocationMap style={styles.map} location={location} />
+          <AddressCard>
+            <AddressText adjustsFontSizeToFit>
+              {location.address}
+            </AddressText>
+            <Ionicons />
+          </AddressCard>
+        </View>
       </StyledContainer>
     );
   }
