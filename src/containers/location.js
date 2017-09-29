@@ -1,13 +1,13 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
-import { Card, Container, SmallText } from '../components/misc';
-import Ionicons from '../components/ionicons';
+import {
+  Card, Container, SmallText, SimpleCard,
+} from '../components/misc';
+import ListItem from '../components/list_item';
 import LocationMap from '../components/location_map';
 import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationActions from '../actions/location';
@@ -23,11 +23,7 @@ const StyledContainer = styled(Container)`
   background-color: ${consts.DARK_WHITE};
 `;
 
-const AddressCard = Card.extend`
-  flex-direction: row;
-`;
-
-const AddressText = SmallText.extend`
+const FlexText = SmallText.extend`
   flex: 1;
 `;
 
@@ -70,15 +66,22 @@ class LocaitonScreen extends React.Component {
             <SmallText>Hours Today: {location.hoursToday}</SmallText>
           </HoursToday>
         </Card>
-        <View>
+
+        <SimpleCard>
           <LocationMap style={styles.map} location={location} />
-          <AddressCard>
-            <AddressText adjustsFontSizeToFit>
-              {location.address}
-            </AddressText>
-            <Ionicons />
-          </AddressCard>
-        </View>
+          <ListItem>
+            <FlexText>{location.address}</FlexText>
+          </ListItem>
+        </SimpleCard>
+
+        <SimpleCard>
+          <ListItem>
+            <FlexText>{location.address}</FlexText>
+          </ListItem>
+          <ListItem>
+            <FlexText>{location.address}</FlexText>
+          </ListItem>
+        </SimpleCard>
       </StyledContainer>
     );
   }
