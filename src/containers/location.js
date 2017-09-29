@@ -5,9 +5,16 @@ import styled from 'styled-components/native';
 
 import * as consts from '../constants';
 import { Container, SmallText } from '../components/misc';
+import LocationMap from '../components/location_map';
 import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationActions from '../actions/location';
 
+
+const styles = {
+  map: {
+    height: 200,
+  },
+};
 
 const StyledContainer = styled(Container)`
   background-color: ${consts.DARK_WHITE};
@@ -19,6 +26,7 @@ const Card = styled.View`
   padding-horizontal: 10;
   border-bottom-color: ${consts.LIGHTER_GREY};
   border-bottom-width: 1;
+  margin-bottom: 15;
 `;
 
 const Discount = styled.Text`
@@ -60,6 +68,9 @@ class LocaitonScreen extends React.Component {
             <SmallText>Hours Today: {location.hoursToday}</SmallText>
           </HoursToday>
         </Card>
+        {location.coords &&
+          <LocationMap style={styles.map} location={location} />
+        }
       </StyledContainer>
     );
   }

@@ -47,7 +47,7 @@ const Distance = styled.Text`
 export default class LocationPrimaryInfo extends React.Component {
   render() {
     const {
-      name, category, discount, priceLevel, distance
+      name, category, discount, priceLevel, distance,
     } = this.props.location;
     const showDiscount = this.props.showDiscount && discount;
     const ItemContainer = showDiscount ? HighLightItem : Item;
