@@ -1,6 +1,8 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { TouchableHighlight } from 'react-native';
+import { phonecall, web } from 'react-native-communications';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
@@ -53,6 +55,16 @@ class LocaitonScreen extends React.Component {
     this.props.actions.fetchLocation(location.id);
   }
 
+  onCallContact = () => {
+    const num = this.props.location.contact.replace(/-/g, '');
+    phonecall(num, false);
+  }
+
+  onVisitWebsite = () => {
+    const url = `http://${this.props.location.website}`;
+    web(url);
+  }
+
   render() {
     const location = {
       ...this.props.location,
@@ -81,14 +93,18 @@ class LocaitonScreen extends React.Component {
         </SimpleCard>
 
         <SimpleCard>
-          <ListItem>
-            <Ionicons size={20} name="ios-call-outline" />
-            <FlexGreyText>{location.contact}</FlexGreyText>
-          </ListItem>
-          <ListItem>
-            <Ionicons size={20} name="ios-laptop-outline" />
-            <FlexGreyText>{location.website}</FlexGreyText>
-          </ListItem>
+          <TouchableHighlight onPress={this.onCallContact}>
+            <ListItem>
+              <Ionicons size={20} name="ios-call-outline" />
+              <FlexGreyText>{location.contact}</FlexGreyText>
+            </ListItem>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={this.onVisitWebsite}>
+            <ListItem>
+              <Ionicons size={20} name="ios-laptop-outline" />
+              <FlexGreyText>{location.website}</FlexGreyText>
+            </ListItem>
+          </TouchableHighlight>
         </SimpleCard>
       </StyledContainer>
     );

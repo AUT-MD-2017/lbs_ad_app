@@ -6,6 +6,7 @@ import Ionicons from './ionicons';
 
 
 const Item = styled.View`
+  background-color: ${consts.WHITE};
   padding-vertical: 10;
   padding-horizontal: 10;
   border-bottom-color: ${consts.LIGHTER_GREY};
