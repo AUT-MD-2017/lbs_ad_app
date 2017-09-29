@@ -7,6 +7,7 @@ import * as consts from '../constants';
 import {
   Card, Container, SmallText, SimpleCard,
 } from '../components/misc';
+import Ionicons from '../components/ionicons';
 import ListItem from '../components/list_item';
 import LocationMap from '../components/location_map';
 import LocationPrimaryInfo from '../components/location_primary_info';
@@ -25,6 +26,11 @@ const StyledContainer = styled(Container)`
 
 const FlexText = SmallText.extend`
   flex: 1;
+`;
+
+const FlexGreyText = FlexText.extend`
+  color: ${consts.DARK_GREY};
+  margin-left: 10;
 `;
 
 const Discount = styled.Text`
@@ -76,10 +82,12 @@ class LocaitonScreen extends React.Component {
 
         <SimpleCard>
           <ListItem>
-            <FlexText>{location.address}</FlexText>
+            <Ionicons size={20} name="ios-call-outline" />
+            <FlexGreyText>{location.contact}</FlexGreyText>
           </ListItem>
           <ListItem>
-            <FlexText>{location.address}</FlexText>
+            <Ionicons size={20} name="ios-laptop-outline" />
+            <FlexGreyText>{location.website}</FlexGreyText>
           </ListItem>
         </SimpleCard>
       </StyledContainer>

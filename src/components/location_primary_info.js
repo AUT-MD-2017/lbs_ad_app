@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
-import PriceLevel from '../components/price_level';
+import PriceLevel from './price_level';
 
 
 const Item = styled.View`

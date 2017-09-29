@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
-import Ionicons from '../components/ionicons';
+import Ionicons from './ionicons';
 
 
 const Item = styled.View`
@@ -13,13 +13,22 @@ const Item = styled.View`
   flex-direction: row;
 `;
 
-const ListItem = (props) => {
-  return (
-    <Item>
-      {props.children}
-      <Ionicons />
-    </Item>
-  );
-};
+export default class ListItem extends React.Component {
+  setNativeProps = (nativeProps) => {
+    this._root.setNativeProps(nativeProps);
+  }
 
-export default ListItem;
+  render() {
+    const { props } = this;
+
+    return (
+      <Item
+        ref={(component) => { this._root = component; }}
+        {...props}
+      >
+        {props.children}
+        <Ionicons color={consts.LIGHT_GREY} />
+      </Item>
+    );
+  }
+}
