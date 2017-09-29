@@ -17,6 +17,14 @@ const Card = styled.View`
   background-color: ${consts.WHITE};
   padding-vertical: 10;
   padding-horizontal: 10;
+  border-bottom-color: ${consts.LIGHTER_GREY};
+  border-bottom-width: 1;
+`;
+
+const Discount = styled.Text`
+  font-size: 12;
+  margin-top: 5;
+  color: ${consts.RED};
 `;
 
 const HoursToday = styled.View`
@@ -39,10 +47,15 @@ class LocaitonScreen extends React.Component {
       ...this.props.navigation.state.params.location,
     };
 
+    const { discount } = location;
+
     return (
       <StyledContainer>
         <Card>
           <LocationPrimaryInfo location={location} />
+          {discount &&
+            <Discount>Coupon: Showing this to gain ${discount}% OFF</Discount>
+          }
           <HoursToday>
             <SmallText>Hours Today: {location.hoursToday}</SmallText>
           </HoursToday>

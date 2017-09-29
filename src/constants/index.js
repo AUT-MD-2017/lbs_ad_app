@@ -10,3 +10,4 @@ export const LIGHTER_GREY = '#eee';
 export const DARK_WHITE = '#f4f4f4';
 export const LIGHT_WHITE = '#f9f9f9';
 export const LIGHT_YELLOW = '#ffc';
+export const RED = '#ff1744';
