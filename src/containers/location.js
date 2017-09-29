@@ -20,7 +20,7 @@ const StyledContainer = styled(Container)`
   background-color: ${consts.DARK_WHITE};
 `;
 
-const Card = styled.View`
+const LocationCard = styled.View`
   background-color: ${consts.WHITE};
   padding-vertical: 10;
   padding-horizontal: 10;
@@ -59,7 +59,7 @@ class LocaitonScreen extends React.Component {
 
     return (
       <StyledContainer>
-        <Card>
+        <LocationCard>
           <LocationPrimaryInfo location={location} />
           {discount &&
             <Discount>Coupon: Showing this to gain ${discount}% OFF</Discount>
@@ -67,10 +67,8 @@ class LocaitonScreen extends React.Component {
           <HoursToday>
             <SmallText>Hours Today: {location.hoursToday}</SmallText>
           </HoursToday>
-        </Card>
-        {location.coords &&
-          <LocationMap style={styles.map} location={location} />
-        }
+        </LocationCard>
+        <LocationMap style={styles.map} location={location} />
       </StyledContainer>
     );
   }
