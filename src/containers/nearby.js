@@ -1,54 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  ListView, TouchableHighlight, Text, View,
-  RefreshControl, ActivityIndicator,
+  ListView, TouchableHighlight, Text, View, RefreshControl,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
 import { Container } from '../components/misc';
+import LocationPrimaryInfo from '../components/location_primary_info';
 import * as locationsActions from '../actions/locations';
 
 
-const Item = styled(View)`
+const LocationItem = styled.View`
   background-color: ${consts.WHITE};
-  align-items: center;
-  flex-direction: row;
-  height: 60;
-  paddingHorizontal: 24;
   border-bottom-color: ${consts.LIGHTER_GREY};
   border-bottom-width: 1;
+  padding-horizontal: 20;
 `;
 
-const LeftView = styled(View)`
-  flex: 1;
-  flex-direction: column;
-`;
-
-const RightView = styled(View)`
-  align-items: center;
-  flex-direction: row;
-`;
-
-const LocationName = styled(Text)`
-  font-size: 16;
-  color: ${consts.BLACK};
-  margin-bottom: 5;
-`;
-
-const Category = styled(Text)`
-  color: ${consts.GREY};
-`;
-
-const Distance = styled(Text)`
-  font-size: 13;
-  color: ${consts.GREY};
-  width: 40;
-  text-align: right;
-  margin-left: 5;
+const HighLightLocationItem = LocationItem.extend`
+  background-color: ${consts.LIGHT_YELLOW};
 `;
 
 const ListFooter = styled(View)`
@@ -59,7 +31,7 @@ const ListFooter = styled(View)`
   background-color: ${consts.WHITE};
 `;
 
-const LoadMoreIndicator = styled(ActivityIndicator)`
+const LoadMoreIndicator = styled.ActivityIndicator`
   margin-right: 8;
 `;
 
@@ -67,7 +39,7 @@ const LoadMoreText = styled(Text)`
   color: ${consts.DARK_GREY};
 `;
 
-class NearbyScreen extends Component {
+class NearbyScreen extends React.Component {
   static navigationOptions = {
     title: 'Nearby',
   }
@@ -118,33 +90,19 @@ class NearbyScreen extends Component {
     });
   }
 
-  renderPriceIcons = (priceLevel) => {
-    let achived = false;
-    return ['l', 'n', 'h'].map((level) => {
-      const color = achived ? consts.LIGHT_GREY : consts.DARK_GREY;
-      if (priceLevel === level) {
-        achived = true;
-      }
-      return <Icon key={level} name="dollar" size={11} color={color} />;
-    });
-  }
+  renderListRow = (rowData) => {
+    const Item = rowData.discount ? HighLightLocationItem : LocationItem;
 
-  renderListRow = rowData => (
-    <TouchableHighlight
-      onPress={() => this.onLocationItemPress(rowData)}
-    >
-      <Item>
-        <LeftView>
-          <LocationName>{rowData.name}</LocationName>
-          <Category>{rowData.category}</Category>
-        </LeftView>
-        <RightView>
-          {this.renderPriceIcons(rowData.priceLevel)}
-          <Distance>{rowData.distance}</Distance>
-        </RightView>
-      </Item>
-    </TouchableHighlight>
-  );
+    return (
+      <TouchableHighlight
+        onPress={() => this.onLocationItemPress(rowData)}
+      >
+        <Item>
+          <LocationPrimaryInfo showDiscount location={rowData} />
+        </Item>
+      </TouchableHighlight>
+    );
+  }
 
   renderListFooter = () => {
     const { total, page, perPage } = this.props.locations;
