@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import * as consts from '../constants';
 import Ionicons from './ionicons';
+import * as consts from '../constants';
 
 
 const Item = styled.View`
