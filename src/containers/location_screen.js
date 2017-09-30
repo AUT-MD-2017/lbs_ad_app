@@ -59,18 +59,31 @@ const WhiteView = styled.View`
 `;
 
 class LocaitonScreen extends React.Component {
-  static navigationOptions = ({ navigation, screenProps }) => ({
-    title: navigation.state.params.location.name,
-    ...consts.NAVIGATION_OPTIONS,
-    headerRight: <HeaderRight color={screenProps.tintColor} onPress={() => { console.log('dddccc'); }} />,
-  });
+  static navigationOptions = ({ navigation, screenProps }) => {
+    const { params } = navigation.state;
+    const headerRightProps = {
+      color: screenProps.tintColor,
+      onPress: params.onPressHeaderRight,
+    };
+
+    return {
+      title: params.location.name,
+      ...consts.NAVIGATION_OPTIONS,
+      headerRight: <HeaderRight {...headerRightProps} />,
+    };
+  };
 
   componentDidMount() {
-    const { location } = this.props.navigation.state.params;
+    const { navigation } = this.props;
+    const { location } = navigation.state.params;
+
+    navigation.setParams({
+      onPressHeaderRight: this.onPressHeaderRight,
+    });
     this.props.actions.fetchLocation(location.id);
   }
 
-  onAddBookmark = () => {
+  onPressHeaderRight = () => {
     console.log('ddd');
   }
 
