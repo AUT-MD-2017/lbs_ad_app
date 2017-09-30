@@ -8,7 +8,7 @@ import {
 import * as consts from '../constants';
 
 
-const Tabs = TabNavigator({
+const TabScreen = TabNavigator({
   Nearby: { screen: NearbyScreen },
   MyAccount: { screen: MyAccountScreen },
 }, {
@@ -28,7 +28,7 @@ const Tabs = TabNavigator({
 });
 
 const App = StackNavigator({
-  Tabs: { screen: Tabs },
+  Tab: { screen: TabScreen },
   Location: { screen: LocationScreen },
   Map: { screen: MapScreen },
 });
