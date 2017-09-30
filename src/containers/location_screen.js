@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { TouchableHighlight } from 'react-native';
 import { phonecall, web } from 'react-native-communications';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
 
 import {
@@ -23,8 +24,8 @@ const styles = {
 
 const HeaderRight = props => (
   <HeaderButton onPress={props.onPress}>
-    <Ionicons
-      name="ios-copy"
+    <Icon
+      name={props.location.isCollected ? 'bookmark' : 'bookmark-o'}
       size={24}
       color={props.color}
     />
@@ -63,6 +64,7 @@ class LocaitonScreen extends React.Component {
     const { params } = navigation.state;
     const headerRightProps = {
       color: screenProps.tintColor,
+      location: params.location,
       onPress: params.onPressHeaderRight,
     };
 
@@ -84,7 +86,11 @@ class LocaitonScreen extends React.Component {
   }
 
   onPressHeaderRight = () => {
-    console.log('ddd');
+    const { actions, location } = this.props;
+
+    actions[
+      location.isCollected ? 'addBookmark' : 'removeBookmark'
+    ](location.id);
   }
 
   onAddressPress = () => {
