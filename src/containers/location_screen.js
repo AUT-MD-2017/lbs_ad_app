@@ -1,14 +1,14 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { TouchableHighlight, Text, View } from 'react-native';
+import { TouchableHighlight, Text } from 'react-native';
 import Anime from 'react-native-anime';
 import { phonecall, web } from 'react-native-communications';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
 
+import BookmarkButton from './bookmark_button';
 import {
-  Ionicons, ListItem, LocationMap, LocationPrimaryInfo, HeaderButton,
+  Ionicons, ListItem, LocationMap, LocationPrimaryInfo,
 } from '../components';
 import {
   Card, Container, SmallText, SimpleCard,
@@ -31,16 +31,6 @@ const styles = {
     height: 200,
   },
 };
-
-const HeaderRight = props => (
-  <HeaderButton onPress={props.onPress}>
-    <Icon
-      name={props.location.isCollected ? 'bookmark' : 'bookmark-o'}
-      size={24}
-      color={props.color}
-    />
-  </HeaderButton>
-);
 
 const StyledContainer = styled(Container)`
   background-color: ${consts.DARK_WHITE};
@@ -74,14 +64,13 @@ class LocaitonScreen extends React.Component {
     const { params } = navigation.state;
     const headerRightProps = {
       color: screenProps.tintColor,
-      location: params.location,
       onPress: params.onPressHeaderRight,
     };
 
     return {
       title: params.location.name,
       ...consts.NAVIGATION_OPTIONS,
-      headerRight: <HeaderRight {...headerRightProps} />,
+      headerRight: <BookmarkButton {...headerRightProps} />,
     };
   };
 
@@ -101,7 +90,7 @@ class LocaitonScreen extends React.Component {
     this._tip.height(30).wait(2000).height(0).start();
 
     actions[
-      location.isCollected ? 'addBookmark' : 'removeBookmark'
+      location.isCollected ? 'removeBookmark' : 'addBookmark'
     ](location.id);
   }
 
