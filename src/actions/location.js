@@ -10,6 +10,15 @@ export const resetLocation = () => ({
 
 export const fetchLocation = createAsyncAction(
   types.FETCH_LOCATION,
-
   ({ id }) => utils.api(`location/${id}`),
+);
+
+export const addBookmark = createAsyncAction(
+  types.ADD_BOOKMARK,
+  ({ id }) => utils.api(`location/${id}/bookmark`, {}, 'post'),
+);
+
+export const removeBookmark = createAsyncAction(
+  types.REMOVE_BOOKMARK,
+  ({ id }) => utils.api(`location/${id}/bookmark`, {}, 'delete'),
 );

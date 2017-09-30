@@ -1,10 +1,12 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { TouchableHighlight } from 'react-native';
+import { TouchableHighlight, Text } from 'react-native';
+import Anime from 'react-native-anime';
 import { phonecall, web } from 'react-native-communications';
 import styled from 'styled-components/native';
 
+import BookmarkButton from './bookmark_button';
 import {
   Ionicons, ListItem, LocationMap, LocationPrimaryInfo,
 } from '../components';
@@ -16,6 +18,15 @@ import * as locationActions from '../actions/location';
 
 
 const styles = {
+  tipView: {
+    height: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: consts.LIGHT_BLUE,
+  },
+  tipText: {
+    color: consts.WHITE,
+  },
   map: {
     height: 200,
   },
@@ -49,14 +60,38 @@ const WhiteView = styled.View`
 `;
 
 class LocaitonScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.location.name,
-    ...consts.NAVIGATION_OPTIONS,
-  });
+  static navigationOptions = ({ navigation, screenProps }) => {
+    const { params } = navigation.state;
+    const headerRightProps = {
+      color: screenProps.tintColor,
+      onPress: params.onPressHeaderRight,
+    };
+
+    return {
+      title: params.location.name,
+      ...consts.NAVIGATION_OPTIONS,
+      headerRight: <BookmarkButton {...headerRightProps} />,
+    };
+  };
 
   componentDidMount() {
-    const { location } = this.props.navigation.state.params;
+    const { navigation } = this.props;
+    const { location } = navigation.state.params;
+
+    navigation.setParams({
+      onPressHeaderRight: this.onPressHeaderRight,
+    });
     this.props.actions.fetchLocation(location.id);
+  }
+
+  onPressHeaderRight = () => {
+    const { actions, location } = this.props;
+
+    this._tip.height(30).wait(2000).height(0).start();
+
+    actions[
+      location.isCollected ? 'removeBookmark' : 'addBookmark'
+    ](location.id);
   }
 
   onAddressPress = () => {
@@ -84,6 +119,17 @@ class LocaitonScreen extends React.Component {
 
     return (
       <StyledContainer>
+        <Anime.View
+          ref={(ref) => { this._tip = ref; }}
+          style={styles.tipView}
+        >
+          <Text style={styles.tipText}>
+            {this.props.location.isCollected ?
+              'It has been added as a bookmark.' :
+              'It has been removed from the bookmark.'
+            }
+          </Text>
+        </Anime.View>
         <Card>
           <LocationPrimaryInfo location={location} />
           {discount &&
