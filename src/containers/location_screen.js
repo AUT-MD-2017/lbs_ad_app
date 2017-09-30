@@ -6,7 +6,7 @@ import { phonecall, web } from 'react-native-communications';
 import styled from 'styled-components/native';
 
 import {
-  Ionicons, ListItem, LocationMap, LocationPrimaryInfo,
+  Ionicons, ListItem, LocationMap, LocationPrimaryInfo, HeaderButton,
 } from '../components';
 import {
   Card, Container, SmallText, SimpleCard,
@@ -20,6 +20,16 @@ const styles = {
     height: 200,
   },
 };
+
+const HeaderRight = props => (
+  <HeaderButton onPress={props.onPress}>
+    <Ionicons
+      name="ios-copy"
+      size={24}
+      color={props.color}
+    />
+  </HeaderButton>
+);
 
 const StyledContainer = styled(Container)`
   background-color: ${consts.DARK_WHITE};
@@ -49,14 +59,19 @@ const WhiteView = styled.View`
 `;
 
 class LocaitonScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: navigation.state.params.location.name,
     ...consts.NAVIGATION_OPTIONS,
+    headerRight: <HeaderRight color={screenProps.tintColor} onPress={() => { console.log('dddccc'); }} />,
   });
 
   componentDidMount() {
     const { location } = this.props.navigation.state.params;
     this.props.actions.fetchLocation(location.id);
+  }
+
+  onAddBookmark = () => {
+    console.log('ddd');
   }
 
   onAddressPress = () => {

@@ -7,6 +7,7 @@ import { createLogger } from 'redux-logger';
 
 import reducers from './reducers';
 import App from './components/app';
+import * as consts from './constants';
 
 
 const logger = createLogger({
@@ -27,7 +28,10 @@ class LbsAdApp extends Component {
   render() {
     return (
       <Provider store={store}>
-        <App />
+        <App screenProps={{
+          tintColor: consts.LIGHT_BLUE,
+        }}
+        />
       </Provider>
     );
   }
