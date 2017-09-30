@@ -51,6 +51,7 @@ const WhiteView = styled.View`
 class LocaitonScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.location.name,
+    ...consts.NAVIGATION_OPTIONS,
   });
 
   componentDidMount() {
