@@ -12,7 +12,7 @@ const Item = styled.View`
   height: 60;
 `;
 
-const HighLightItem = Item.extend`
+const HighlightItem = Item.extend`
   background-color: ${consts.LIGHT_YELLOW};
 `;
 
@@ -50,7 +50,7 @@ export default class LocationPrimaryInfo extends React.Component {
       name, category, discount, priceLevel, distance,
     } = this.props.location;
     const showDiscount = this.props.showDiscount && discount;
-    const ItemContainer = showDiscount ? HighLightItem : Item;
+    const ItemContainer = showDiscount ? HighlightItem : Item;
 
     return (
       <ItemContainer>

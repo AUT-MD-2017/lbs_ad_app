@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native';
 
+import { NavigationTab } from '.';
 import { LocationPrimaryInfo } from '../components';
 import { Container } from '../components/misc';
 import * as consts from '../constants';
@@ -19,7 +20,7 @@ const LocationItem = styled.View`
   padding-horizontal: 20;
 `;
 
-const HighLightLocationItem = LocationItem.extend`
+const HighlightLocationItem = LocationItem.extend`
   background-color: ${consts.LIGHT_YELLOW};
 `;
 
@@ -91,7 +92,7 @@ class NearbyScreen extends React.Component {
   }
 
   renderListRow = (rowData) => {
-    const Item = rowData.discount ? HighLightLocationItem : LocationItem;
+    const Item = rowData.discount ? HighlightLocationItem : LocationItem;
 
     return (
       <TouchableHighlight
@@ -146,6 +147,7 @@ class NearbyScreen extends React.Component {
           renderRow={this.renderListRow}
           renderFooter={this.renderListFooter}
         />
+        <NavigationTab />
       </Container>
     );
   }
