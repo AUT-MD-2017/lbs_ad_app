@@ -170,9 +170,9 @@ class LocaitonScreen extends React.Component {
   }
 }
 
-const mapStateToProps = ({ location }) => {
-  return { location };
-};
+const mapStateToProps = ({ location }) => ({
+  location,
+});
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(locationActions, dispatch),

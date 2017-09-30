@@ -43,13 +43,8 @@ const LoadMoreText = styled.Text`
 class NearbyScreen extends React.Component {
   static navigationOptions = {
     title: 'Nearby',
-
     tabBarIcon: ({ tintColor }) => (
-      <Icon
-        name="map-marker"
-        size={24}
-        color={tintColor}
-      />
+      <Icon name="map-marker" size={24} color={tintColor} />
     ),
   }
 
@@ -160,9 +155,9 @@ class NearbyScreen extends React.Component {
   }
 }
 
-const mapStateToProps = ({ locations }) => {
-  return { locations };
-};
+const mapStateToProps = ({ locations }) => ({
+  locations,
+});
 
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(locationsActions, dispatch),

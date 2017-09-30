@@ -7,14 +7,10 @@ export const initialState = {};
 
 const reducer = createReducer()
   .when(types.RESET_LOCATION)
-  .done(() => {
-    return initialState;
-  })
+  .done(() => initialState)
 
   .when(types.FETCH_LOCATION)
-  .done((state, { payload: { data } }) => {
-    return data;
-  })
+  .done((state, { payload: { data } }) => data)
 
   .when(types.ADD_BOOKMARK)
   .done(state => ({

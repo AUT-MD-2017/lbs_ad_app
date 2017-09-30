@@ -20,9 +20,9 @@ class BookmarkButton extends React.Component {
   }
 }
 
-const mapStateToProps = ({ location }) => {
-  return { location };
-};
+const mapStateToProps = ({ location }) => ({
+  location,
+});
 
 export default connect(
   mapStateToProps,
