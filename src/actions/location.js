@@ -14,11 +14,11 @@ export const fetchLocation = createAsyncAction(
 );
 
 export const addBookmark = createAsyncAction(
-  types.FETCH_LOCATION,
+  types.ADD_BOOKMARK,
   ({ id }) => utils.api(`location/${id}/bookmark`, {}, 'post'),
 );
 
 export const removeBookmark = createAsyncAction(
-  types.FETCH_LOCATION,
+  types.REMOVE_BOOKMARK,
   ({ id }) => utils.api(`location/${id}/bookmark`, {}, 'delete'),
 );

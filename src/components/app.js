@@ -14,14 +14,14 @@ const TabScreen = TabNavigator({
 }, {
   tabBarOptions: {
     showIcon: true,
-    activeTintColor: consts.LIGHT_BLUE,
+    activeTintColor: consts.RED,
     labelStyle: {
       height: 17,
       fontWeight: 'bold',
     },
     style: {
       height: 55,
-      borderTopColor: consts.LIGHT_BLUE,
+      borderTopColor: consts.RED,
       borderTopWidth: 2,
     },
   },

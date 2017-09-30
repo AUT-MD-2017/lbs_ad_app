@@ -16,6 +16,16 @@ const reducer = createReducer()
     return data;
   })
 
+  .when(types.ADD_BOOKMARK, state => ({
+    ...state,
+    isCollected: true,
+  }))
+
+  .when(types.REMOVE_BOOKMARK, state => ({
+    ...state,
+    isCollected: false,
+  }))
+
   .build(initialState);
 
 export default reducer;
