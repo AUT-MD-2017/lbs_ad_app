@@ -81,10 +81,6 @@ class MyAccountScreen extends React.Component {
     ],
   }
 
-  componentDidMount() {
-    this.props.actions.fetchCurrentUser();
-  }
-
   onTabIndexChange = index => this.setState({ index })
 
   renderListRoute = () => {

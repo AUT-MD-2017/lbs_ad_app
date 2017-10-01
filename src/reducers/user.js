@@ -7,7 +7,16 @@ export const initialState = {};
 
 const reducer = createReducer()
   .when(types.FETCH_CURRENT_USER)
-  .done((state, { payload: { data } }) => data)
+  .done((state, { payload: { data } }) => ({
+    ...state,
+    ...data,
+  }))
+
+  .when(types.FETCH_BOOKMARKS)
+  .done((state, { payload: { data } }) => ({
+    ...state,
+    bookmarks: data,
+  }))
 
   .build(initialState);
 

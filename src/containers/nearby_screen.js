@@ -10,6 +10,7 @@ import styled from 'styled-components/native';
 import { LocationPrimaryInfo } from '../components';
 import { Container } from '../components/misc';
 import * as consts from '../constants';
+import * as userActions from '../actions/user';
 import * as locationsActions from '../actions/locations';
 
 
@@ -55,6 +56,8 @@ class NearbyScreen extends React.Component {
 
   componentDidMount() {
     this.fetchLocations();
+    // TODO: should be called immediatly after logging in.
+    this.props.actions.fetchCurrentUser();
   }
 
   onListRefresh = () => {
@@ -128,7 +131,7 @@ class NearbyScreen extends React.Component {
   }
 
   render() {
-    const { navigation, locations: { items } } = this.props;
+    const { locations: { items } } = this.props;
 
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id,
@@ -160,7 +163,10 @@ const mapStateToProps = ({ locations }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(locationsActions, dispatch),
+  actions: bindActionCreators({
+    ...userActions,
+    ...locationsActions,
+  }, dispatch),
 });
 
 export default connect(
