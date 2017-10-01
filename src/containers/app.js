@@ -6,7 +6,7 @@ import {
 
 import { MapScreen } from '../components';
 import {
-  NearbyScreen, MyAccountScreen, LocationScreen,
+  NearbyScreen, MyAccountScreen, LocationScreen, SettingsScreen,
 } from '../containers';
 
 import * as consts from '../constants';
@@ -35,6 +35,7 @@ export const AppScreen = StackNavigator({
   Tab: { screen: TabScreen },
   Location: { screen: LocationScreen },
   Map: { screen: MapScreen },
+  Settings: { screen: SettingsScreen },
 });
 
 class App extends React.Component {

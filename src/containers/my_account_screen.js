@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import {
   ListView, TouchableHighlight, TouchableWithoutFeedback, Text,
 } from 'react-native';
+import {
+  TabViewAnimated, TabBar, SceneMap,
+} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 import styled from 'styled-components/native';
 
 import {
@@ -51,13 +53,6 @@ export const StyledCard = Card.extend`
   border-bottom-width: 0;
 `;
 
-const SettingsButton = styled.View`
-  align-items: center;
-  padding-horizontal: 12;
-  align-items: center;
-  justify-content: center;
-`;
-
 const UserName = styled.Text`
   color: ${consts.DARK_GREY};
 `;
@@ -69,6 +64,27 @@ const BookmarkTitle = styled.Text`
   margin-left: 12;
   margin-bottom: 5;
 `;
+
+const SettingsButton = (props) => {
+  const StyledView = styled.View`
+    align-items: center;
+    padding-horizontal: 12;
+    align-items: center;
+    justify-content: center;
+  `;
+
+  return (
+    <TouchableWithoutFeedback {...props}>
+      <StyledView>
+        <Ionicons
+          name="md-settings"
+          size={20}
+          color={consts.DARK_GREY}
+        />
+      </StyledView>
+    </TouchableWithoutFeedback>
+  );
+};
 
 class MyAccountScreen extends React.Component {
   static navigationOptions = {
@@ -99,6 +115,10 @@ class MyAccountScreen extends React.Component {
   onLocationItemPress = (location) => {
     const { navigation: { navigate } } = this.props;
     navigate('Location', { location });
+  }
+
+  onSettingsPress = () => {
+    this.props.navigation.navigate('Settings');
   }
 
   renderListRoute = () => {
@@ -159,9 +179,7 @@ class MyAccountScreen extends React.Component {
         <StyledCard>
           <UserName>{user.email}</UserName>
           <TouchableWithoutFeedback>
-            <SettingsButton>
-              <Ionicons name="md-settings" size={20} color={consts.DARK_GREY} />
-            </SettingsButton>
+            <SettingsButton onPress={this.onSettingsPress} />
           </TouchableWithoutFeedback>
         </StyledCard>
 
