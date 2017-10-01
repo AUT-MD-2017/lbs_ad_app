@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LocationMap from '../components/location_map';
+import LocationMap from './location_map';
 import * as consts from '../constants';
 
 
