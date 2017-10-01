@@ -11,3 +11,8 @@ export const REMOVE_BOOKMARK = 'REMOVE_BOOKMARK';
 
 // navigation
 export const CHANGE_NAVIGATION = 'CHANGE_NAVIGATION';
+
+
+// user
+export const FETCH_CURRENT_USER = 'FETCH_CURRENT_USER';
+export const FETCH_BOOKMARKS = 'FETCH_BOOKMARKS';

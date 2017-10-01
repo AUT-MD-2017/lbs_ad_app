@@ -1,10 +1,10 @@
-import { Container as BaseContainer } from 'native-base';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
 
 
-export const Container = styled(BaseContainer)`
+export const Container = styled.View`
+  flex: 1;
   background-color: ${consts.WHITE};
 `;
 
@@ -29,4 +29,11 @@ export const SimpleCard = Card.extend`
   padding-vertical: 0;
   padding-horizontal: 0;
   border-bottom-width: 0;
+`;
+
+export const LocationItem = styled.View`
+  background-color: ${consts.WHITE};
+  border-bottom-color: ${consts.LIGHTER_GREY};
+  border-bottom-width: 1;
+  padding-horizontal: 20;
 `;
