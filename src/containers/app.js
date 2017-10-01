@@ -43,6 +43,7 @@ class App extends React.Component {
 
     return (
       <AppScreen
+        screenProps={props.screenProps}
         navigation={addNavigationHelpers({
           dispatch: props.dispatch,
           state: props.nav,

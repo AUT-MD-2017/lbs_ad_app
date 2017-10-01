@@ -82,18 +82,14 @@ class MyAccountScreen extends React.Component {
       { key: 'list', title: 'LIST' },
       { key: 'map', title: 'MAP' },
     ],
-    loaded: false,
   }
 
-  componentDidMount() {
-    const { actions, user } = this.props;
-    actions.fetchBookmarks(user).then(() => {
-      _.delay(() => {
-        this.setState({
-          loaded: true,
-        });
-      }, 3000);
-    });
+  componentWillReceiveProps(nextProps) {
+    const { actions, user, nav } = this.props;
+
+    if (nav.routeName !== nextProps.nav.routeName) {
+      actions.fetchBookmarks(user);
+    }
   }
 
   onTabIndexChange = index => this.setState({ index })
@@ -143,7 +139,7 @@ class MyAccountScreen extends React.Component {
   }
 
   render() {
-    const { user, navigation } = this.props;
+    const { user } = this.props;
 
     const tabProps = {
       renderScene: SceneMap({
@@ -156,9 +152,6 @@ class MyAccountScreen extends React.Component {
       ),
     };
 
-    const showBookmarks =
-      navigation.state.routeName === 'MyAccount' && this.state.loaded;
-
     return (
       <StyledContainer>
         <StyledCard>
@@ -170,23 +163,22 @@ class MyAccountScreen extends React.Component {
           </TouchableWithoutFeedback>
         </StyledCard>
 
-        {showBookmarks &&
-          <StyledContainer>
-            <BookmarkTitle>BOOKMARKS</BookmarkTitle>
-            <TabViewAnimated
-              style={styles.tabView}
-              navigationState={this.state}
-              {...tabProps}
-              onIndexChange={this.onTabIndexChange}
-            />
-          </StyledContainer>
-        }
+        <StyledContainer>
+          <BookmarkTitle>BOOKMARKS</BookmarkTitle>
+          <TabViewAnimated
+            style={styles.tabView}
+            navigationState={this.state}
+            {...tabProps}
+            onIndexChange={this.onTabIndexChange}
+          />
+        </StyledContainer>
       </StyledContainer>
     );
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ nav, user }) => ({
+  nav,
   user,
 });
 
