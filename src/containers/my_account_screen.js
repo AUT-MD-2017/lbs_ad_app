@@ -5,14 +5,18 @@ import { connect } from 'react-redux';
 import {
   ListView, TouchableHighlight, TouchableWithoutFeedback, Text,
 } from 'react-native';
+import {
+  TabViewAnimated, TabBar, SceneMap,
+} from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 import styled from 'styled-components/native';
 
 import {
   Ionicons, LocationPrimaryInfo, LocationMap,
 } from '../components';
-import { Container, Card, LocationItem } from '../components/misc';
+import {
+  Container, Card, LocationItem,
+} from '../components/misc';
 import * as consts from '../constants';
 import * as userActions from '../actions/user';
 
@@ -51,13 +55,6 @@ export const StyledCard = Card.extend`
   border-bottom-width: 0;
 `;
 
-const SettingsButton = styled.View`
-  align-items: center;
-  padding-horizontal: 12;
-  align-items: center;
-  justify-content: center;
-`;
-
 const UserName = styled.Text`
   color: ${consts.DARK_GREY};
 `;
@@ -69,6 +66,47 @@ const BookmarkTitle = styled.Text`
   margin-left: 12;
   margin-bottom: 5;
 `;
+
+const SettingsButton = (props) => {
+  const StyledView = styled.View`
+    padding-horizontal: 12;
+    align-items: center;
+    justify-content: center;
+  `;
+
+  return (
+    <TouchableWithoutFeedback {...props}>
+      <StyledView>
+        <Ionicons
+          name="md-settings"
+          size={20}
+          color={consts.DARK_GREY}
+        />
+      </StyledView>
+    </TouchableWithoutFeedback>
+  );
+};
+
+const EmptyPlaceholder = (props) => {
+  const StyledView = styled.View`
+    align-items: center;
+    justify-content: center;
+    background-color: ${consts.WHITE};
+    flex: 1;
+  `;
+
+  const StyledText = styled.Text`
+    color: ${consts.RED};
+  `;
+
+  return (
+    <StyledView>
+      <StyledText>
+        {props.children || 'There are no bookmark collections.'}
+      </StyledText>
+    </StyledView>
+  );
+};
 
 class MyAccountScreen extends React.Component {
   static navigationOptions = {
@@ -101,19 +139,23 @@ class MyAccountScreen extends React.Component {
     navigate('Location', { location });
   }
 
-  renderListRoute = () => {
-    const { user } = this.props;
+  onSettingsPress = () => {
+    this.props.navigation.navigate('Settings');
+  }
 
-    if (_.isEmpty(user.bookmarks)) {
+  renderListRoute = () => {
+    const { bookmarks } = this.props.user;
+
+    if (_.isEmpty(bookmarks)) {
       return (
-        <Text>There is no collections.</Text>
+        <EmptyPlaceholder />
       );
     }
 
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id,
     });
-    const dataSource = ds.cloneWithRows(user.bookmarks);
+    const dataSource = ds.cloneWithRows(bookmarks);
 
     const renderListRow = rowData => (
       <TouchableHighlight
@@ -136,8 +178,9 @@ class MyAccountScreen extends React.Component {
 
   renderMapRoute = () => {
     const { bookmarks } = this.props.user;
-    return bookmarks ?
-      <LocationMap locations={bookmarks} /> : null;
+
+    return _.isEmpty(bookmarks) ?
+      <EmptyPlaceholder /> : <LocationMap locations={bookmarks} />;
   }
 
   render() {
@@ -159,9 +202,7 @@ class MyAccountScreen extends React.Component {
         <StyledCard>
           <UserName>{user.email}</UserName>
           <TouchableWithoutFeedback>
-            <SettingsButton>
-              <Ionicons name="md-settings" size={20} color={consts.DARK_GREY} />
-            </SettingsButton>
+            <SettingsButton onPress={this.onSettingsPress} />
           </TouchableWithoutFeedback>
         </StyledCard>
 
