@@ -9,7 +9,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 import styled from 'styled-components/native';
 
-import { Ionicons, LocationPrimaryInfo } from '../components';
+import {
+  Ionicons, LocationPrimaryInfo, LocationMap,
+} from '../components';
 import { Container, Card, LocationItem } from '../components/misc';
 import * as consts from '../constants';
 import * as userActions from '../actions/user';
@@ -133,9 +135,9 @@ class MyAccountScreen extends React.Component {
   }
 
   renderMapRoute = () => {
-    return (
-      <Text>Map Route</Text>
-    );
+    const { bookmarks } = this.props.user;
+    return bookmarks ?
+      <LocationMap locations={bookmarks} /> : null;
   }
 
   render() {
@@ -163,15 +165,14 @@ class MyAccountScreen extends React.Component {
           </TouchableWithoutFeedback>
         </StyledCard>
 
-        <StyledContainer>
-          <BookmarkTitle>BOOKMARKS</BookmarkTitle>
-          <TabViewAnimated
-            style={styles.tabView}
-            navigationState={this.state}
-            {...tabProps}
-            onIndexChange={this.onTabIndexChange}
-          />
-        </StyledContainer>
+        <BookmarkTitle>BOOKMARKS</BookmarkTitle>
+
+        <TabViewAnimated
+          style={styles.tabView}
+          navigationState={this.state}
+          {...tabProps}
+          onIndexChange={this.onTabIndexChange}
+        />
       </StyledContainer>
     );
   }

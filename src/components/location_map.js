@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { ActivityIndicator, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
@@ -24,8 +25,20 @@ const Placeholder = styled.View`
 `;
 
 export default class LocationMap extends React.Component {
+  renderMarkers = locations => locations.map(location => (
+    <MapView.Marker
+      key={location.id}
+      title={location.name}
+      description={`Address: ${location.address}`}
+      pinColor={consts.RED}
+      coordinate={location.coords}
+    />
+  ))
+
   render() {
-    const { props, props: { location } } = this;
+    const { props } = this;
+
+    const location = props.location || _.first(props.locations);
 
     const region = {
       ...location.coords,
@@ -38,24 +51,16 @@ export default class LocationMap extends React.Component {
       ...props.style,
     };
 
-    if (location.coords) {
-      return (
-        <MapView
-          showsUserLocation
-          {...props}
-          style={style}
-          initialRegion={region}
-        >
-          <MapView.Marker
-            title={location.name}
-            description={`Address: ${location.address}`}
-            coordinate={region}
-          />
-        </MapView>
-      );
-    }
-
-    return (
+    return location.coords ? (
+      <MapView
+        showsUserLocation
+        {...props}
+        style={style}
+        initialRegion={region}
+      >
+        {this.renderMarkers(props.locations || [location])}
+      </MapView>
+    ) : (
       <Placeholder style={style}>
         <ActivityIndicator color={consts.WHITE} size="large" />
       </Placeholder>
