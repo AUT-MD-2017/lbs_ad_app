@@ -1,10 +1,10 @@
-import { Container as BaseContainer } from 'native-base';
 import styled from 'styled-components/native';
 
 import * as consts from '../constants';
 
 
-export const Container = styled(BaseContainer)`
+export const Container = styled.View`
+  flex: 1;
   background-color: ${consts.WHITE};
 `;
 
