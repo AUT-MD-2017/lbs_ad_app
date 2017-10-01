@@ -14,7 +14,9 @@ import styled from 'styled-components/native';
 import {
   Ionicons, LocationPrimaryInfo, LocationMap,
 } from '../components';
-import { Container, Card, LocationItem } from '../components/misc';
+import {
+  Container, Card, LocationItem,
+} from '../components/misc';
 import * as consts from '../constants';
 import * as userActions from '../actions/user';
 
@@ -67,7 +69,6 @@ const BookmarkTitle = styled.Text`
 
 const SettingsButton = (props) => {
   const StyledView = styled.View`
-    align-items: center;
     padding-horizontal: 12;
     align-items: center;
     justify-content: center;
@@ -83,6 +84,27 @@ const SettingsButton = (props) => {
         />
       </StyledView>
     </TouchableWithoutFeedback>
+  );
+};
+
+const EmptyPlaceholder = (props) => {
+  const StyledView = styled.View`
+    align-items: center;
+    justify-content: center;
+    background-color: ${consts.WHITE};
+    flex: 1;
+  `;
+
+  const StyledText = styled.Text`
+    color: ${consts.RED};
+  `;
+
+  return (
+    <StyledView>
+      <StyledText>
+        {props.children || 'There are no bookmark collections.'}
+      </StyledText>
+    </StyledView>
   );
 };
 
@@ -122,18 +144,18 @@ class MyAccountScreen extends React.Component {
   }
 
   renderListRoute = () => {
-    const { user } = this.props;
+    const { bookmarks } = this.props.user;
 
-    if (_.isEmpty(user.bookmarks)) {
+    if (_.isEmpty(bookmarks)) {
       return (
-        <Text>There is no collections.</Text>
+        <EmptyPlaceholder />
       );
     }
 
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id,
     });
-    const dataSource = ds.cloneWithRows(user.bookmarks);
+    const dataSource = ds.cloneWithRows(bookmarks);
 
     const renderListRow = rowData => (
       <TouchableHighlight
@@ -156,8 +178,9 @@ class MyAccountScreen extends React.Component {
 
   renderMapRoute = () => {
     const { bookmarks } = this.props.user;
-    return bookmarks ?
-      <LocationMap locations={bookmarks} /> : null;
+
+    return _.isEmpty(bookmarks) ?
+      <EmptyPlaceholder /> : <LocationMap locations={bookmarks} />;
   }
 
   render() {
