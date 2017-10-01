@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 
 import reducers from './reducers';
-import App from './components/app';
+import App from './containers/app';
 import * as consts from './constants';
 
 

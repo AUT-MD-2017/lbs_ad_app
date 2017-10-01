@@ -47,7 +47,6 @@ class App extends React.Component {
           dispatch: props.dispatch,
           state: props.nav,
         })}
-        {...props}
       />
     );
   }
