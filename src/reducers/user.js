@@ -15,7 +15,7 @@ const reducer = createReducer()
   .when(types.FETCH_BOOKMARKS)
   .done((state, { payload: { data } }) => ({
     ...state,
-    bookmarks: data,
+    bookmarks: data.data,
   }))
 
   .build(initialState);

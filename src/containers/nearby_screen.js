@@ -8,18 +8,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styled from 'styled-components/native';
 
 import { LocationPrimaryInfo } from '../components';
-import { Container } from '../components/misc';
+import { Container, LocationItem } from '../components/misc';
 import * as consts from '../constants';
 import * as userActions from '../actions/user';
 import * as locationsActions from '../actions/locations';
 
-
-const LocationItem = styled.View`
-  background-color: ${consts.WHITE};
-  border-bottom-color: ${consts.LIGHTER_GREY};
-  border-bottom-width: 1;
-  padding-horizontal: 20;
-`;
 
 const HighlightLocationItem = LocationItem.extend`
   background-color: ${consts.LIGHT_YELLOW};
@@ -132,7 +125,6 @@ class NearbyScreen extends React.Component {
 
   render() {
     const { locations: { items } } = this.props;
-
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1.id !== r2.id,
     });

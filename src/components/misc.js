@@ -30,3 +30,10 @@ export const SimpleCard = Card.extend`
   padding-horizontal: 0;
   border-bottom-width: 0;
 `;
+
+export const LocationItem = styled.View`
+  background-color: ${consts.WHITE};
+  border-bottom-color: ${consts.LIGHTER_GREY};
+  border-bottom-width: 1;
+  padding-horizontal: 20;
+`;

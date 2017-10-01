@@ -1,13 +1,16 @@
+import _ from 'lodash';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { TouchableWithoutFeedback, Text } from 'react-native';
+import {
+  ListView, TouchableHighlight, TouchableWithoutFeedback, Text,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 import styled from 'styled-components/native';
 
-import { Ionicons } from '../components';
-import { Container, Card } from '../components/misc';
+import { Ionicons, LocationPrimaryInfo } from '../components';
+import { Container, Card, LocationItem } from '../components/misc';
 import * as consts from '../constants';
 import * as userActions from '../actions/user';
 
@@ -79,13 +82,57 @@ class MyAccountScreen extends React.Component {
       { key: 'list', title: 'LIST' },
       { key: 'map', title: 'MAP' },
     ],
+    loaded: false,
+  }
+
+  componentDidMount() {
+    const { actions, user } = this.props;
+    actions.fetchBookmarks(user).then(() => {
+      _.delay(() => {
+        this.setState({
+          loaded: true,
+        });
+      }, 3000);
+    });
   }
 
   onTabIndexChange = index => this.setState({ index })
 
+  onLocationItemPress = (location) => {
+    const { navigation: { navigate } } = this.props;
+    navigate('Location', { location });
+  }
+
   renderListRoute = () => {
+    const { user } = this.props;
+
+    if (_.isEmpty(user.bookmarks)) {
+      return (
+        <Text>There is no collections.</Text>
+      );
+    }
+
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1.id !== r2.id,
+    });
+    const dataSource = ds.cloneWithRows(user.bookmarks);
+
+    const renderListRow = rowData => (
+      <TouchableHighlight
+        onPress={() => this.onLocationItemPress(rowData)}
+      >
+        <LocationItem>
+          <LocationPrimaryInfo showDiscount location={rowData} />
+        </LocationItem>
+      </TouchableHighlight>
+    );
+
     return (
-      <Text>List Route</Text>
+      <ListView
+        enableEmptySections
+        dataSource={dataSource}
+        renderRow={renderListRow}
+      />
     );
   }
 
@@ -96,7 +143,7 @@ class MyAccountScreen extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, navigation } = this.props;
 
     const tabProps = {
       renderScene: SceneMap({
@@ -109,6 +156,9 @@ class MyAccountScreen extends React.Component {
       ),
     };
 
+    const showBookmarks =
+      navigation.state.routeName === 'MyAccount' && this.state.loaded;
+
     return (
       <StyledContainer>
         <StyledCard>
@@ -120,14 +170,17 @@ class MyAccountScreen extends React.Component {
           </TouchableWithoutFeedback>
         </StyledCard>
 
-        <BookmarkTitle>BOOKMARKS</BookmarkTitle>
-
-        <TabViewAnimated
-          style={styles.tabView}
-          navigationState={this.state}
-          {...tabProps}
-          onIndexChange={this.onTabIndexChange}
-        />
+        {showBookmarks &&
+          <StyledContainer>
+            <BookmarkTitle>BOOKMARKS</BookmarkTitle>
+            <TabViewAnimated
+              style={styles.tabView}
+              navigationState={this.state}
+              {...tabProps}
+              onIndexChange={this.onTabIndexChange}
+            />
+          </StyledContainer>
+        }
       </StyledContainer>
     );
   }
