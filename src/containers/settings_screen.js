@@ -58,13 +58,9 @@ class SettingsScreen extends React.Component {
     ...consts.NAVIGATION_OPTIONS,
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { actions, user, nav } = this.props;
-
-    console.log('!!!!', nav, nextProps.nav);
-    // if (nav.routeName !== nextProps.nav.routeName) {
-    //   actions.fetchSettings(user);
-    // }
+  componentDidMount() {
+    const { actions, user } = this.props;
+    actions.fetchSettings(user);
   }
 
   renderNotificationSettings = () => {
