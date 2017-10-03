@@ -122,8 +122,11 @@ class MyAccountScreen extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { actions, user, nav } = this.props;
+    const nextRouteName = nextProps.nav.routeName;
 
-    if (nav.routeName !== nextProps.nav.routeName) {
+    if (
+      nav.routeName !== nextRouteName && nextRouteName === 'MyAccount'
+    ) {
       actions.fetchBookmarks(user);
     }
   }

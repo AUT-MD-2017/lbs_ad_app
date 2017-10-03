@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -57,6 +58,26 @@ class SettingsScreen extends React.Component {
     ...consts.NAVIGATION_OPTIONS,
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { actions, user, nav } = this.props;
+
+    console.log('!!!!', nav, nextProps.nav);
+    // if (nav.routeName !== nextProps.nav.routeName) {
+    //   actions.fetchSettings(user);
+    // }
+  }
+
+  renderNotificationSettings = () => {
+    const { notification } = this.props.user.settings;
+
+    return _.toPairs(notification, ([key, value]) => (
+      <Item key={key}>
+        <Text>{key}</Text>
+        <Switch />
+      </Item>
+    ));
+  }
+
   render() {
     const { user } = this.props;
 
@@ -72,28 +93,20 @@ class SettingsScreen extends React.Component {
         </Card>
         <Title>NOTIFICATION</Title>
         <Card>
-          <Item>
-            <Text>EAT</Text>
-            <Switch />
-          </Item>
-          <Item>
-            <Text>DRINK</Text>
-            <Switch />
-          </Item>
+          {this.renderNotificationSettings()}
         </Card>
       </DarkWhiteContainer>
     );
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ nav, user }) => ({
+  nav,
   user,
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({
-    ...userActions,
-  }, dispatch),
+  actions: bindActionCreators(userActions, dispatch),
 });
 
 export default connect(

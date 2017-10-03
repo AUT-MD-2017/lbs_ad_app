@@ -13,3 +13,8 @@ export const fetchBookmarks = createAsyncAction(
   types.FETCH_BOOKMARKS,
   user => utils.api(`user/${user.id}/bookmarks`),
 );
+
+export const fetchSettings = createAsyncAction(
+  types.FETCH_SETTINGS,
+  user => utils.api(`user/${user.id}/settings`),
+);

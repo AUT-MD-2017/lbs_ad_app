@@ -1,9 +1,13 @@
+import _ from 'lodash';
 import { createReducer } from 'redux-action-tools';
 
 import * as types from '../constants/action_types';
 
 
-export const initialState = {};
+export const initialState = {
+  bookmarks: [],
+  settings: {},
+};
 
 const reducer = createReducer()
   .when(types.FETCH_CURRENT_USER)
@@ -17,6 +21,13 @@ const reducer = createReducer()
     ...state,
     bookmarks: data.data,
   }))
+
+  .when(types.FETCH_SETTINGS)
+  .done((state, { payload: { data } }) => {
+    return _.merge({}, state, {
+      settings: data,
+    });
+  })
 
   .build(initialState);
 
