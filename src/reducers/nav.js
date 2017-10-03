@@ -9,13 +9,22 @@ const initialState = AppScreen.router.getStateForAction(
   NavigationActions.init(),
 );
 
+const getRouteName = (state) => {
+  while (state.routes) {
+    state = state.routes[state.index];
+  }
+  return state.routeName;
+};
+
 export default (state = initialState, action) => {
   const nextState = AppScreen.router.getStateForAction(action, state);
+
   if (nextState) {
     return {
       ...nextState,
-      routeName: action.routeName,
+      routeName: getRouteName(nextState),
     };
   }
+
   return state;
 };

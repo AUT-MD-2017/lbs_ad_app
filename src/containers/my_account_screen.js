@@ -3,7 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
-  ListView, TouchableHighlight, TouchableWithoutFeedback, Text,
+  ListView, TouchableHighlight, TouchableWithoutFeedback,
 } from 'react-native';
 import {
   TabViewAnimated, TabBar, SceneMap,
@@ -15,7 +15,7 @@ import {
   Ionicons, LocationPrimaryInfo, LocationMap,
 } from '../components';
 import {
-  Container, Card, LocationItem,
+  Card, DarkWhiteContainer, LocationItem,
 } from '../components/misc';
 import * as consts from '../constants';
 import * as userActions from '../actions/user';
@@ -42,10 +42,6 @@ const styles = {
     },
   },
 };
-
-const StyledContainer = styled(Container)`
-  background-color: ${consts.DARK_WHITE};
-`;
 
 export const StyledCard = Card.extend`
   flex-direction: row;
@@ -126,8 +122,11 @@ class MyAccountScreen extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { actions, user, nav } = this.props;
+    const nextRouteName = nextProps.nav.routeName;
 
-    if (nav.routeName !== nextProps.nav.routeName) {
+    if (
+      nav.routeName !== nextRouteName && nextRouteName === 'MyAccount'
+    ) {
       actions.fetchBookmarks(user);
     }
   }
@@ -198,7 +197,7 @@ class MyAccountScreen extends React.Component {
     };
 
     return (
-      <StyledContainer>
+      <DarkWhiteContainer>
         <StyledCard>
           <UserName>{user.email}</UserName>
           <TouchableWithoutFeedback>
@@ -214,7 +213,7 @@ class MyAccountScreen extends React.Component {
           {...tabProps}
           onIndexChange={this.onTabIndexChange}
         />
-      </StyledContainer>
+      </DarkWhiteContainer>
     );
   }
 }

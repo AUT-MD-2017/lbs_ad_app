@@ -8,6 +8,10 @@ export const Container = styled.View`
   background-color: ${consts.WHITE};
 `;
 
+export const DarkWhiteContainer = Container.extend`
+  background-color: ${consts.DARK_WHITE};
+`;
+
 export const SmallText = styled.Text.attrs({
   adjustsFontSizeToFit: true,
 })`
