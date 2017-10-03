@@ -66,20 +66,26 @@ class SettingsScreen extends React.Component {
   renderNotificationSettings = () => {
     const { actions, user } = this.props;
     const { notification } = user.settings;
+    const settings = _.toPairs(notification);
+    const settingsLength = settings.length;
 
-    return _.toPairs(notification).map(([key, value]) => (
-      <Item key={key}>
-        <Text>{key}</Text>
-        <Switch
-          onValueChange={(value) => {
-            actions.changeNotificationSettings({
-              user, key, value,
-            });
-          }}
-          value={value}
-        />
-      </Item>
-    ));
+    return settings.map(([key, value], i) => {
+      const ListItem = settingsLength === i + 1 ? LastItem : Item;
+
+      return (
+        <ListItem key={key}>
+          <Text>{key}</Text>
+          <Switch
+            onValueChange={(value) => {
+              actions.changeNotificationSettings({
+                user, key, value,
+              });
+            }}
+            value={value}
+          />
+        </ListItem>
+      );
+    });
   }
 
   render() {
