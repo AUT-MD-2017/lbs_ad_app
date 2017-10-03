@@ -3,6 +3,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Text, Switch } from 'react-native';
+import { Button } from 'react-native-elements';
 import styled from 'styled-components/native';
 
 import { DarkWhiteContainer } from '../components/misc';
@@ -12,9 +13,9 @@ import * as userActions from '../actions/user';
 
 const Title = styled.Text`
   color: ${consts.DARK_GREY};
-  marginTop: 30;
-  marginBottom: 10;
-  marginLeft: 10;
+  margin-top: 30;
+  margin-bottom: 10;
+  margin-left: 10;
 `;
 
 const Card = styled.View`
@@ -25,8 +26,8 @@ const Card = styled.View`
 const mixinStyles = `
   height: 45;
   padding-horizontal: 10;
-  borderBottomColor: ${consts.LIGHTER_GREY};
-  borderBottomWidth: 1;
+  border-bottom-color: ${consts.LIGHTER_GREY};
+  border-bottom-width: 1;
 `;
 
 const Item = styled.View`
@@ -49,7 +50,11 @@ const EmailInput = styled.TextInput.attrs({
 `;
 
 const PasswordInput = EmailInput.extend`
-  borderBottomWidth: 0;
+  border-bottom-width: 0;
+`;
+
+const LogoutButton = styled(Button)`
+  margin-top: 30;
 `;
 
 class SettingsScreen extends React.Component {
@@ -61,6 +66,9 @@ class SettingsScreen extends React.Component {
   componentDidMount() {
     const { actions, user } = this.props;
     actions.fetchSettings(user);
+  }
+
+  onLogoutPress = () => {
   }
 
   renderNotificationSettings = () => {
@@ -105,6 +113,14 @@ class SettingsScreen extends React.Component {
         <Card>
           {this.renderNotificationSettings()}
         </Card>
+        <LogoutButton
+          icon={{
+            name: 'exit-to-app',
+          }}
+          onPress={this.onLogoutPress}
+          backgroundColor={consts.RED}
+          title="Log Out"
+        />
       </DarkWhiteContainer>
     );
   }
