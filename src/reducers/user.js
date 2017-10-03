@@ -29,6 +29,14 @@ const reducer = createReducer()
     });
   })
 
+  .when(types.CHANGE_NOTIFICATION_SETTINGS, (state, { payload: {
+    key, value,
+  } }) => {
+    const newState = _.cloneDeep(state);
+    newState.settings.notification[key] = value;
+    return newState;
+  })
+
   .build(initialState);
 
 export default reducer;
