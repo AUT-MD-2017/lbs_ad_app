@@ -69,6 +69,7 @@ class SettingsScreen extends React.Component {
   }
 
   onLogoutPress = () => {
+    this.props.actions.logout();
   }
 
   renderNotificationSettings = () => {

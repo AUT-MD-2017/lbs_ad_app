@@ -1,12 +1,28 @@
-import { createAsyncAction } from 'redux-action-tools';
+import {
+  createAction, createAsyncAction,
+} from 'redux-action-tools';
 
 import * as utils from '../utils';
 import * as types from '../constants/action_types';
 
 
+export const logout = createAction(
+  types.LOGOUT,
+);
+
+export const login = createAsyncAction(
+  types.LOGIN,
+  () => utils.api('user/login'),
+);
+
+export const register = createAsyncAction(
+  types.REGISTER,
+  () => utils.api('user/register'),
+);
+
 export const fetchCurrentUser = createAsyncAction(
   types.FETCH_CURRENT_USER,
-  () => utils.api('current_user'),
+  () => utils.api('user/current'),
 );
 
 export const fetchBookmarks = createAsyncAction(

@@ -9,12 +9,27 @@ export const initialState = {
   settings: {},
 };
 
+const normalHandler = (state, { payload: { data } }) => ({
+  ...state,
+  ...data,
+});
+
 const reducer = createReducer()
+  .when(types.LOGOUT, () => {
+    return initialState;
+  })
+
+  .when(types.LOGIN)
+  .done(normalHandler)
+
+  .when(types.REGISTER)
+  .done(normalHandler)
+
   .when(types.FETCH_CURRENT_USER)
-  .done((state, { payload: { data } }) => ({
-    ...state,
-    ...data,
-  }))
+  .done(normalHandler)
+
+  .when(types.FETCH_CURRENT_USER)
+  .done(normalHandler)
 
   .when(types.FETCH_BOOKMARKS)
   .done((state, { payload: { data } }) => ({

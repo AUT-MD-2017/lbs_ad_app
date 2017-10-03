@@ -14,6 +14,9 @@ export const CHANGE_NAVIGATION = 'CHANGE_NAVIGATION';
 
 
 // user
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const REGISTER = 'REGISTER';
 export const FETCH_CURRENT_USER = 'FETCH_CURRENT_USER';
 export const FETCH_BOOKMARKS = 'FETCH_BOOKMARKS';
 export const FETCH_SETTINGS = 'FETCH_SETTINGS';
