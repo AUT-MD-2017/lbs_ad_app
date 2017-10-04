@@ -1,4 +1,5 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
@@ -6,6 +7,7 @@ import styled from 'styled-components/native';
 
 import { AnonymousContainer } from '../../components/misc';
 import * as consts from '../../constants';
+import * as userActions from '../../actions/user';
 
 
 const Logo = () => {
@@ -90,6 +92,11 @@ const mapStateToProps = ({ user }) => ({
   user,
 });
 
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(userActions, dispatch),
+});
+
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(IntroGuideScreen);

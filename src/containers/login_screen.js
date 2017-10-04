@@ -1,7 +1,9 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { TouchableWithoutFeedback } from 'react-native';
+import {
+  AsyncStorage, TouchableWithoutFeedback,
+} from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements';
 
 import {
@@ -18,11 +20,22 @@ class LoginScreen extends React.Component {
     header: null,
   }
 
+  state = {
+    email: '',
+    password: '',
+  }
+
   onFormSubmit = () => {
-    this.props.actions.login(
-      this._email.value,
-      this._password.value,
-    );
+    const { actions, navigation } = this.props;
+    const { email, password } = this.state;
+
+    actions.login(email, password).then(() => {
+      AsyncStorage.setItem(
+        consts.STORAGE_KEY.USER_TOKEN,
+        this.props.user.token,
+      );
+      navigation.navigate('LoggedIn');
+    });
   }
 
   render() {
@@ -35,17 +48,19 @@ class LoginScreen extends React.Component {
 
           <FormLabel>Email</FormLabel>
           <FormInput
-            ref={(ref) => { this._email = ref; }}
             keyboardType="email-address"
             placeholder="Please input your registered email"
+            onChangeText={(email) => { this.setState({ email }); }}
+            value={this.state.email}
           />
 
           <PasswordArea>
             <FormLabel>Password</FormLabel>
             <FormInput
-              ref={(ref) => { this._password = ref; }}
               secureTextEntry
               placeholder="Your password"
+              onChangeText={(password) => { this.setState({ password }); }}
+              value={this.state.password}
             />
           </PasswordArea>
 

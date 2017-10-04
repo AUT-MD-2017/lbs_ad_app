@@ -1,7 +1,9 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { TouchableWithoutFeedback } from 'react-native';
+import {
+  AsyncStorage, TouchableWithoutFeedback,
+} from 'react-native';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import styled from 'styled-components/native';
 
@@ -53,11 +55,18 @@ class RegisterScreen extends React.Component {
     header: null,
   }
 
+  state = {
+    email: '',
+    password: '',
+  }
+
   onFormSubmit = () => {
-    this.props.actions.register(
-      this._email.value,
-      this._password.value,
-    );
+    const { actions, navigation } = this.props;
+    const { email, password } = this.state;
+
+    actions.register(email, password).then(() => {
+      navigation.navigate('LoggedIn');
+    });
   }
 
   render() {
@@ -70,17 +79,19 @@ class RegisterScreen extends React.Component {
 
           <FormLabel>Email</FormLabel>
           <FormInput
-            ref={(ref) => { this._email = ref; }}
             keyboardType="email-address"
             placeholder="Please input a valid email address"
+            onChangeText={(email) => { this.setState({ email }); }}
+            value={this.state.email}
           />
 
           <PasswordArea>
             <FormLabel>Password</FormLabel>
             <FormInput
-              ref={(ref) => { this._password = ref; }}
               secureTextEntry
               placeholder="Should more than 6 characters"
+              onChangeText={(password) => { this.setState({ password }); }}
+              value={this.state.password}
             />
           </PasswordArea>
 

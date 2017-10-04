@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Text, Switch } from 'react-native';
+import { AsyncStorage, Text, Switch } from 'react-native';
 import { Button } from 'react-native-elements';
 import styled from 'styled-components/native';
 
@@ -69,7 +69,12 @@ class SettingsScreen extends React.Component {
   }
 
   onLogoutPress = () => {
-    this.props.actions.logout();
+    const { actions, navigation } = this.props;
+
+    actions.logout();
+    AsyncStorage.removeItem(consts.STORAGE_KEY.USER_TOKEN).then(() => {
+      navigation.navigate('LoggedOut');
+    });
   }
 
   renderNotificationSettings = () => {
@@ -127,8 +132,7 @@ class SettingsScreen extends React.Component {
   }
 }
 
-const mapStateToProps = ({ nav, user }) => ({
-  nav,
+const mapStateToProps = ({ user }) => ({
   user,
 });
 
