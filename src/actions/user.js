@@ -1,12 +1,37 @@
-import { createAsyncAction } from 'redux-action-tools';
+import {
+  createAction, createAsyncAction,
+} from 'redux-action-tools';
 
 import * as utils from '../utils';
 import * as types from '../constants/action_types';
 
 
+export const setUserToken = createAction(
+  types.SET_USER_TOKEN,
+  token => token,
+);
+
+export const logout = createAction(
+  types.LOGOUT,
+);
+
+export const login = createAsyncAction(
+  types.LOGIN,
+  ({ email, password }) => utils.api('user/login', {
+    email, password,
+  }),
+);
+
+export const register = createAsyncAction(
+  types.REGISTER,
+  ({ email, password }) => utils.api('user/register', {
+    email, password,
+  }),
+);
+
 export const fetchCurrentUser = createAsyncAction(
   types.FETCH_CURRENT_USER,
-  () => utils.api('current_user'),
+  () => utils.api('user/current'),
 );
 
 export const fetchBookmarks = createAsyncAction(

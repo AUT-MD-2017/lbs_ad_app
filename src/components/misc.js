@@ -12,6 +12,10 @@ export const DarkWhiteContainer = Container.extend`
   background-color: ${consts.DARK_WHITE};
 `;
 
+export const AnonymousContainer = Container.extend`
+  margin-top: ${consts.STATUSBAR_HEIGHT};
+`;
+
 export const SmallText = styled.Text.attrs({
   adjustsFontSizeToFit: true,
 })`

@@ -1,6 +1,12 @@
+import _ from 'lodash';
+import { Platform } from 'react-native';
+
+
 export const API_ADDRESS = `http://${
   __DEV__ ? '0.0.0.0:3000' : 'yourhost.com'
 }/api/`;
+
+export const APP_NAME = 'Sedna';
 
 export const BLACK = '#000';
 export const WHITE = '#fff';
@@ -20,3 +26,23 @@ export const NAVIGATION_OPTIONS = {
   },
   headerTintColor: LIGHT_BLUE,
 };
+
+export const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+
+export const STORAGE_KEY = {
+  USER_TOKEN: 'USER_TOKEN',
+};
+
+export const PRIMARY_BUTTON = {
+  backgroundColor: RED,
+  buttonStyle: {
+    height: 40,
+    borderColor: RED,
+    borderWidth: 1,
+  },
+};
+
+export const PRIMARY_OUTLINE_BUTTON = _.merge({}, PRIMARY_BUTTON, {
+  color: RED,
+  backgroundColor: WHITE,
+});

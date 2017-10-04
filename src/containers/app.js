@@ -7,6 +7,7 @@ import {
 import { MapScreen } from '../components';
 import {
   NearbyScreen, MyAccountScreen, LocationScreen, SettingsScreen,
+  IntroGuideScreen, RegisterScreen, LoginScreen,
 } from '../containers';
 
 import * as consts from '../constants';
@@ -31,19 +32,42 @@ const TabScreen = TabNavigator({
   },
 });
 
-export const AppScreen = StackNavigator({
+const LoggedInScreen = StackNavigator({
   Tab: { screen: TabScreen },
   Location: { screen: LocationScreen },
   Map: { screen: MapScreen },
   Settings: { screen: SettingsScreen },
 });
 
+const LoggedOutScreen = StackNavigator(
+  {
+    IntroGuide: { screen: IntroGuideScreen },
+    Register: { screen: RegisterScreen },
+    Login: { screen: LoginScreen },
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+  },
+);
+
+export const RootScreen = StackNavigator(
+  {
+    LoggedOut: { screen: LoggedOutScreen },
+    LoggedIn: { screen: LoggedInScreen },
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+  },
+);
+
 class App extends React.Component {
   render() {
     const { props } = this;
 
     return (
-      <AppScreen
+      <RootScreen
         screenProps={props.screenProps}
         navigation={addNavigationHelpers({
           dispatch: props.dispatch,

@@ -24,7 +24,7 @@ export default class ListItem extends React.Component {
 
     return (
       <Item
-        ref={(component) => { this._root = component; }}
+        ref={(ref) => { this._root = ref; }}
         {...props}
       >
         {props.children}
