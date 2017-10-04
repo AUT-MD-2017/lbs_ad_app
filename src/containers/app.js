@@ -6,8 +6,8 @@ import {
 
 import { MapScreen } from '../components';
 import {
-  NearbyScreen, MyAccountScreen, LocationScreen,
-  SettingsScreen, IntroGuideScreen,
+  NearbyScreen, MyAccountScreen, LocationScreen, SettingsScreen,
+  IntroGuideScreen, RegisterScreen, LoginScreen,
 } from '../containers';
 
 import * as consts from '../constants';
@@ -39,9 +39,17 @@ const LoggedInScreen = StackNavigator({
   Settings: { screen: SettingsScreen },
 });
 
-const LoggedOutScreen = StackNavigator({
-  IntroGuide: { screen: IntroGuideScreen },
-});
+const LoggedOutScreen = StackNavigator(
+  {
+    IntroGuide: { screen: IntroGuideScreen },
+    Register: { screen: RegisterScreen },
+    Login: { screen: LoginScreen },
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+  },
+);
 
 export const RootScreen = StackNavigator(
   {

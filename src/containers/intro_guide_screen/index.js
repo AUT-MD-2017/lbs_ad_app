@@ -1,5 +1,4 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
@@ -7,7 +6,6 @@ import styled from 'styled-components/native';
 
 import { AnonymousContainer } from '../../components/misc';
 import * as consts from '../../constants';
-import * as userActions from '../../actions/user';
 
 
 const Logo = () => {
@@ -63,6 +61,8 @@ class IntroGuideScreen extends React.Component {
   }
 
   render() {
+    const { navigation: { navigate } } = this.props;
+
     return (
       <AnonymousContainer>
         <Logo />
@@ -71,11 +71,17 @@ class IntroGuideScreen extends React.Component {
             {...consts.PRIMARY_BUTTON}
             borderRadius={100}
             title="REGISTER"
+            onPress={() => {
+              navigate('Register');
+            }}
           />
           <LoginButton
             {...consts.PRIMARY_OUTLINE_BUTTON}
             borderRadius={100}
             title="LOG IN"
+            onPress={() => {
+              navigate('Login');
+            }}
           />
         </ButtonArea>
       </AnonymousContainer>
@@ -87,11 +93,6 @@ const mapStateToProps = ({ user }) => ({
   user,
 });
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(userActions, dispatch),
-});
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(IntroGuideScreen);
