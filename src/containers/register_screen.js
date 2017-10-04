@@ -50,7 +50,7 @@ export const OperationText = TipText.extend`
   color: ${consts.RED};
 `;
 
-class RegisterScreen extends React.Component {
+export class RegisterScreen extends React.Component {
   static navigationOptions = {
     header: null,
   }
@@ -65,6 +65,10 @@ class RegisterScreen extends React.Component {
     const { email, password } = this.state;
 
     actions.register(email, password).then(() => {
+      AsyncStorage.setItem(
+        consts.STORAGE_KEY.USER_TOKEN,
+        this.props.user.token,
+      );
       navigation.navigate('LoggedIn');
     });
   }

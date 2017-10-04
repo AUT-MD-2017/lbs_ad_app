@@ -71,8 +71,8 @@ class SettingsScreen extends React.Component {
   onLogoutPress = () => {
     const { actions, navigation } = this.props;
 
-    actions.logout();
     AsyncStorage.removeItem(consts.STORAGE_KEY.USER_TOKEN).then(() => {
+      actions.logout();
       navigation.navigate('LoggedOut');
     });
   }

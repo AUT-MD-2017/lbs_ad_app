@@ -1,43 +1,19 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  AsyncStorage, TouchableWithoutFeedback,
-} from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import { FormLabel, FormInput } from 'react-native-elements';
 
 import {
-  Title, PasswordArea, SubmitButton, Wrapper, TipArea,
-  TipText, OperationText,
+  Title, PasswordArea, SubmitButton, Wrapper,
+  TipArea, TipText, OperationText, RegisterScreen,
 } from './register_screen';
 import { AnonymousContainer } from '../components/misc';
 import * as consts from '../constants';
 import * as userActions from '../actions/user';
 
 
-class LoginScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
-  }
-
-  state = {
-    email: '',
-    password: '',
-  }
-
-  onFormSubmit = () => {
-    const { actions, navigation } = this.props;
-    const { email, password } = this.state;
-
-    actions.login(email, password).then(() => {
-      AsyncStorage.setItem(
-        consts.STORAGE_KEY.USER_TOKEN,
-        this.props.user.token,
-      );
-      navigation.navigate('LoggedIn');
-    });
-  }
-
+class LoginScreen extends RegisterScreen {
   render() {
     const { navigation: { navigate } } = this.props;
 
