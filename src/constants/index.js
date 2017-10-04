@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Platform } from 'react-native';
 
 
@@ -29,3 +30,17 @@ export const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
 export const STORAGE_KEY = {
   USER_TOKEN: 'USER_TOKEN',
 };
+
+export const PRIMARY_BUTTON = {
+  backgroundColor: RED,
+  buttonStyle: {
+    height: 40,
+    borderColor: RED,
+    borderWidth: 1,
+  },
+};
+
+export const PRIMARY_OUTLINE_BUTTON = _.merge({}, PRIMARY_BUTTON, {
+  color: RED,
+  backgroundColor: WHITE,
+});
