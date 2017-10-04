@@ -6,6 +6,8 @@ export const API_ADDRESS = `http://${
   __DEV__ ? '0.0.0.0:3000' : 'yourhost.com'
 }/api/`;
 
+export const APP_NAME = 'Sedna';
+
 export const BLACK = '#000';
 export const WHITE = '#fff';
 export const DARK_GREY = '#666';

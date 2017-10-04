@@ -27,7 +27,7 @@ const Logo = () => {
   return (
     <StyledView>
       <StyledImage source={source} />
-      <StyledText>Sedna</StyledText>
+      <StyledText>{consts.APP_NAME}</StyledText>
     </StyledView>
   );
 };
@@ -39,9 +39,6 @@ const ButtonArea = styled.View`
 
 const RegisterButton = styled(Button)`
   margin-bottom: 15;
-`;
-
-const LoginButton = styled(Button)`
 `;
 
 class IntroGuideScreen extends React.Component {
@@ -75,7 +72,7 @@ class IntroGuideScreen extends React.Component {
               navigate('Register');
             }}
           />
-          <LoginButton
+          <Button
             {...consts.PRIMARY_OUTLINE_BUTTON}
             borderRadius={100}
             title="LOG IN"
