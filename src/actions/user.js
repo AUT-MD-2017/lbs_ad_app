@@ -17,12 +17,16 @@ export const logout = createAction(
 
 export const login = createAsyncAction(
   types.LOGIN,
-  () => utils.api('user/login'),
+  ({ email, password }) => utils.api('user/login', {
+    email, password,
+  }),
 );
 
 export const register = createAsyncAction(
   types.REGISTER,
-  () => utils.api('user/register'),
+  ({ email, password }) => utils.api('user/register', {
+    email, password,
+  }),
 );
 
 export const fetchCurrentUser = createAsyncAction(

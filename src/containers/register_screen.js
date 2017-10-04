@@ -18,33 +18,33 @@ export const Title = styled.Text`
   text-align: center;
 `;
 
-const PasswordArea = styled.View`
+export const PasswordArea = styled.View`
   margin-top: 15;
   margin-bottom: 60;
 `;
 
-const SubmitButton = styled(Button)`
+export const SubmitButton = styled(Button)`
   margin-horizontal: 5;
 `;
 
-const Wrapper = styled.View`
+export const Wrapper = styled.View`
   flex: 1;
 `;
 
-const TipArea = styled.View`
+export const TipArea = styled.View`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  margin-bottom: 10;
+  padding-bottom: 10;
 `;
 
-const TipText = styled.Text`
+export const TipText = styled.Text`
   color: ${consts.GREY};
   font-size: 12;
 `;
 
-const OperationText = TipText.extend`
-  padding-left: 5;
+export const OperationText = TipText.extend`
+  margin-left: 5;
   color: ${consts.RED};
 `;
 
@@ -53,7 +53,11 @@ class RegisterScreen extends React.Component {
     header: null,
   }
 
-  componentWillMount() {
+  onFormSubmit = () => {
+    this.props.actions.register(
+      this._email.value,
+      this._password.value,
+    );
   }
 
   render() {
@@ -66,36 +70,37 @@ class RegisterScreen extends React.Component {
 
           <FormLabel>Email</FormLabel>
           <FormInput
+            ref={(ref) => { this._email = ref; }}
             keyboardType="email-address"
-            placeholder="Please input a valid email address."
+            placeholder="Please input a valid email address"
           />
 
           <PasswordArea>
             <FormLabel>Password</FormLabel>
             <FormInput
+              ref={(ref) => { this._password = ref; }}
               secureTextEntry
-              placeholder="Should more than 6 characters."
+              placeholder="Should more than 6 characters"
             />
           </PasswordArea>
 
           <SubmitButton
             {...consts.PRIMARY_BUTTON}
             title="REGISTER"
-            onPress={() => {
-            }}
+            onPress={this.onFormSubmit}
           />
         </Wrapper>
 
-        <TipArea>
-          <TipText>Have been here before?</TipText>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              navigate('Login');
-            }}
-          >
+        <TouchableWithoutFeedback
+          onPress={() => {
+            navigate('Login');
+          }}
+        >
+          <TipArea>
+            <TipText>Have been here before?</TipText>
             <OperationText>LOG IN</OperationText>
-          </TouchableWithoutFeedback>
-        </TipArea>
+          </TipArea>
+        </TouchableWithoutFeedback>
       </AnonymousContainer>
     );
   }
