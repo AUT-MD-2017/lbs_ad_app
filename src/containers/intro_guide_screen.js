@@ -1,9 +1,10 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
+import { AsyncStorage, Text } from 'react-native';
 
 import { AnonymousContainer } from '../components/misc';
+import * as consts from '../constants';
 import * as userActions from '../actions/user';
 
 
@@ -13,7 +14,14 @@ class IntroGuideScreen extends React.Component {
   }
 
   componentWillMount() {
-    // this.props.navigation.navigate('LoggedIn');
+    const { actions, navigation } = this.props;
+
+    AsyncStorage.getItem(consts.STORAGE_KEY.USER_TOKEN).then((token) => {
+      if (token) {
+        actions.setUserToken(token);
+        navigation.navigate('LoggedIn');
+      }
+    });
   }
 
   render() {
@@ -25,8 +33,7 @@ class IntroGuideScreen extends React.Component {
   }
 }
 
-const mapStateToProps = ({ nav, user }) => ({
-  nav,
+const mapStateToProps = ({ user }) => ({
   user,
 });
 

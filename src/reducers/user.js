@@ -15,6 +15,13 @@ const normalHandler = (state, { payload: { data } }) => ({
 });
 
 const reducer = createReducer()
+  .when(types.SET_USER_TOKEN, (state, { payload }) => {
+    return {
+      ...state,
+      token: payload,
+    };
+  })
+
   .when(types.LOGOUT, () => {
     return initialState;
   })

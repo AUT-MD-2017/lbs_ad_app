@@ -6,6 +6,11 @@ import * as utils from '../utils';
 import * as types from '../constants/action_types';
 
 
+export const setUserToken = createAction(
+  types.SET_USER_TOKEN,
+  token => token,
+);
+
 export const logout = createAction(
   types.LOGOUT,
 );
